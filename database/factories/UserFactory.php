@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'hall_of_residence' => fake()->name(),
             'role' => fake()->randomElement(['admin','rider','user']),
             'status' => fake()->randomElement(['active','inactive']),
-            'remember_token' => Str::random(10),
+            'remember_token' => Str::random(10), 
         ];
     }
 
