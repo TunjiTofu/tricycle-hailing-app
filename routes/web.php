@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiderController;
@@ -32,10 +33,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+// Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
+
+Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [IndexController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/logout', [IndexController::class, 'destroy'])->name('admin.logout');
 });
 
-Route::middleware(['auth', 'role:rider'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
     Route::get('/rider/dashboard', [RiderController::class, 'RiderDashboard'])->name('rider.dashboard');
 });
