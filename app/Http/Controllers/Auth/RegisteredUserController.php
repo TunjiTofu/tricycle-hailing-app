@@ -8,10 +8,13 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Intervention\Image\Facades\Image;
+
 
 class RegisteredUserController extends Controller
 {
@@ -31,21 +34,44 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'username' => ['required', 'string', 'max:8', 'unique:' . User::class],
+            'email' => ['required', 'string', 'email', 'max:100', 'unique:' . User::class],
+            'surname' => ['required', 'string', 'max:30'],
+            'oname' => ['required', 'string', 'max:30'],
+            'phone' => ['required', 'string', 'max:20', 'unique:' . User::class],
+            'dob' => ['required', 'string'],
+            'sex' => ['required', 'string', 'max:1', 'in:m,f'],
+            'photo' => ['required'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $image = $request->file('photo');
+        $newImageName = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+
+        //resize with laravel image intervention
+        Image::make($image)->resize(256, 256)->save('upload/profile_pics/' . $newImageName);
+        $saveUrl = 'upload/profile_pics/' . $newImageName;
+
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
+            'surname' => $request->surname,
+            'other_name' => $request->oname,
+            'phone' => $request->phone,
+            'dob' => $request->dob,
+            'sex' => $request->sex,
+            'role' => 'user',
+            'status' => 'active',
             'password' => Hash::make($request->password),
+            'picture' => $saveUrl,
+            'created_at' => Carbon::now(),
         ]);
+
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('login');
     }
 }
