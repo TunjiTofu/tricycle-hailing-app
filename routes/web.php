@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\RiderController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +37,14 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [IndexController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/logout', [IndexController::class, 'destroy'])->name('admin.logout');
+
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/admin/profile', 'index')->name('admin.profile');
+        Route::get('/admin/profile-edit', 'edit')->name('admin.profile-edit');
+        Route::post('/admin/profile-save', 'update')->name('admin.profile-save');
+        Route::get('/admin/password-change', 'passwordChange')->name('admin.password-change');
+        Route::post('/admin/password-update', 'passwordUpdate')->name('admin.password-update');
+    });
 });
 
 Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
