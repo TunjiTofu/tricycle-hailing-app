@@ -22,6 +22,11 @@ class IndexController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        $notification = array(
+            'message' => 'Logout Successful',
+            'alert-type' => 'success'
+        );
+
+        return redirect('/login')->with($notification);
     }
 }
