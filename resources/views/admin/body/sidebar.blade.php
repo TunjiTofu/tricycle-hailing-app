@@ -36,11 +36,11 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
-                        <span>Email</span>
+                        <span>Keke Management</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="email-inbox.html">Inbox</a></li>
-                        <li><a href="email-read.html">Read Email</a></li>
+                        <li><a href="{{ route('keke.index') }}">View All Keke</a></li>
+                        <li><a href="email-read.html">Add New Keke</a></li>
                     </ul>
                 </li>
 
