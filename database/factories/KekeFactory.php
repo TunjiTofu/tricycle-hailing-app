@@ -20,7 +20,7 @@ class KekeFactory extends Factory
     {
         return [
             'plate_no' => fake()->unique()->numerify('Keke-####'),
-            'color' => fake()->hexColor(),
+            'color' => fake()->colorName(),
             'rider_id' => fake()->randomDigitNotNull(),
         ];
     }

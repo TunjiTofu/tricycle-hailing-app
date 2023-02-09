@@ -11,6 +11,12 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
 
+    <!-- Select2 -->
+    <link href="{{ asset('backend/assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Sweet Alert-->
+    <link href="{{ asset('backend/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- jquery.vectormap css -->
     <link href="{{ asset('backend/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}"
         rel="stylesheet" type="text/css" />
@@ -38,6 +44,8 @@
 
     <!-- Toaster CDN CSS Link -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+
 </head>
 
 <body data-topbar="dark">
@@ -138,6 +146,8 @@
     <script src="{{ asset('backend/assets/libs/node-waves/waves.min.js') }}"></script>
 
 
+
+
     <!-- apexcharts -->
     <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
@@ -169,6 +179,8 @@
 
 
     <!-- App js -->
+    <script src="{{ asset('backend/assets/js/pages/form-advanced.init.js') }}"></script>
+
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
     <script src="{{ asset('backend/assets/js/pages/dashboard.init.js') }}"></script>
 
@@ -198,6 +210,26 @@
         @endif
     </script>
 
+    <!-- Select2 -->
+    <script src="{{ asset('backend/assets/libs/select2/js/select2.min.js') }}"></script>
+    <!-- Make Select2 a child of the Modal -->
+    <script>
+        $('.modal .select2').select2({
+            dropdownParent: $('.modal')
+        });
+    </script>
+
+ <!-- Sweet Alert -->
+    {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script> 
+
+    <script src="{{ asset('backend/assets/js/code.js') }}"></script> 
+
+    {{-- <!-- Sweet Alerts js -->
+    <script src="{{ asset('backend/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="{{ asset('backend/assets/js/pages/sweet-alerts.init.js') }}"></script> --}}
 
 </body>
 

@@ -125,8 +125,6 @@
                                     <div class="col-12">
                                         <button class="btn btn-info w-100 waves-effect waves-light"
                                             type="submit">Update</button>
-                                        {{-- <input type="submit" name="submit" value="Update Profile"
-                                            class="btn btn-info w-100 waves-effect waves-light"> --}}
                                     </div>
                                 </div>
 
