@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\RiderController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,8 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
         Route::get('/admin/password-change', 'passwordChange')->name('admin.password-change');
         Route::post('/admin/password-update', 'passwordUpdate')->name('admin.password-update');
     });
+
+    Route::resource('keke', KekeController::class);
 });
 
 Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
