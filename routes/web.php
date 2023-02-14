@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\CarMoved;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -52,4 +53,12 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
     Route::get('/rider/dashboard', [RiderController::class, 'RiderDashboard'])->name('rider.dashboard');
+});
+
+Route::get('/app', function(){
+    return view('map');
+});
+
+Route::get('/move', function(){
+    event(new CarMoved(-24.344, 131.031));
 });

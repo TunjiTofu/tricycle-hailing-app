@@ -42,7 +42,7 @@
                                                     {{ $keke->color }}
                                                 </div>
                                             </td>
-                                            <td>{{ $keke->rider_id }}</td>
+                                            <td>{{ ucfirst($keke->user->username) }}</td>
                                             <td><b>Created:</b> {{ Carbon\Carbon::parse($keke->created_at)->toDayDateTimeString() }} <br>
                                                 <b>Last Updated:</b> {{ Carbon\Carbon::parse($keke->updated_at)->diffForHumans() }}
                                             </td>

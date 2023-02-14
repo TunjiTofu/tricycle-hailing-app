@@ -1,4 +1,5 @@
 import './bootstrap';
+console.log('App.js included');
 
 import Alpine from 'alpinejs';
 
