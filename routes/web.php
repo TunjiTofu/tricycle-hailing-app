@@ -4,6 +4,7 @@ use App\Events\CarMoved;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\PlaceController;
 use App\Http\Controllers\RiderController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,7 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
     });
 
     Route::resource('keke', KekeController::class);
+    Route::resource('place', PlaceController::class);
 });
 
 Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {

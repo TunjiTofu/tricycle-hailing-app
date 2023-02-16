@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Place;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+// use TarfinLabs\LaravelSpatial\Types\Point;
+use TarfinLabs\LaravelSpatial\Types\Point;
+use Webpatser\Uuid\Uuid;
 
 class PlaceController extends Controller
 {
@@ -12,9 +18,10 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
-        //
+        $places = Place::latest()->get();
+        return view('admin.place.index', compact('places'));
     }
 
     /**
@@ -22,9 +29,9 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('admin.place.create');
     }
 
     /**
@@ -35,7 +42,29 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $request->validate([
+            'name' => 'required|string|min:3|unique:' . Place::class,
+            'longitude' => ['required', 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
+            'latitude' => ['required', 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
+        ], [
+            'name.required' => 'The Location Name Field is Required',
+            'name.unique' => 'This Location Exists in the Database',
+            'longitude.required' => 'The Longitude Field is Required',
+            'latitude.required' => 'The Latitude Field is Required',
+        ]);
+        Place::create([
+            'id' => Uuid::generate()->string,
+            'name' => $request->name,
+            'coordinates' => new Point(lat: $request->latitude, lng: $request->longitude),
+            'status' => 1,
+            'created_at' => Carbon::now(),
+        ]);
+        $notification = array(
+            'message' => 'A New Location Has Been Added',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('place.index')->with($notification);
     }
 
     /**
@@ -44,9 +73,11 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): View
     {
-        //
+        // dd($id);
+        $place = Place::findOrFail($id);
+        return view('admin.place.view-place', compact('place'));
     }
 
     /**
@@ -55,9 +86,10 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id): View
     {
-        //
+        $place = Place::findOrFail($id);
+        return view('admin.place.edit', compact('place'));
     }
 
     /**
@@ -69,7 +101,41 @@ class PlaceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($id);
+        $request->validate([
+            'name' => 'required|string|min:3',
+            'status' => 'required|numeric|in:0,1',
+            'longitude' => ['required', 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
+            'latitude' => ['required', 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
+        ], [
+            'name.required' => 'The Location Name Field is Required',
+            'name.unique' => 'This Location Exists in the Database',
+            'longitude.required' => 'The Longitude Field is Required',
+            'latitude.required' => 'The Latitude Field is Required',
+            'status.required' => 'The Status Field is Required',
+            'status.numeric' => 'The Status Field is Required',
+            'status.in' => 'The Status Field Option Must Be Either Enable or Disable',
+        ]);
+
+        $place = Place::findOrFail($id);
+        $place->name = $request->name;
+        $place->status = $request->status;
+        $place->coordinates = new Point(lat: $request->latitude, lng: $request->longitude);
+        $place->updated_at = Carbon::now();
+
+        if (!$place->save()) {
+            $notificationError = array(
+                'message' => "Location Not Updated",
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notificationError);
+        }
+
+        $notification = array(
+            'message' => "Location Has Been Updated",
+            'alert-type' => 'success'
+        );
+        return redirect()->route('place.index')->with($notification);
     }
 
     /**
@@ -80,6 +146,12 @@ class PlaceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $place= Place::findOrFail($id);
+        $place->delete();
+        $notification = array(
+            'message' => "Location Has Been Deleted",
+            'alert-type' => 'info'
+        );
+        return redirect()->route('place.index')->with($notification);
     }
 }

@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('coordinates');
+            $table->point('coordinates');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

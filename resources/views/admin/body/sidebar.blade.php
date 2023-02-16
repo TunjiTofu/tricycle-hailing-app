@@ -40,7 +40,18 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('keke.index') }}">View All Keke</a></li>
-                        <li><a href="email-read.html">Add New Keke</a></li>
+                        {{-- <li><a href="email-read.html">Add New Keke</a></li> --}}
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-mail-send-line"></i>
+                        <span>Place Management</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('place.index') }}">View All Locations</a></li>
+                        <li><a href="{{ route('place.create') }}">Create New Location</a></li>
+                        {{-- <li><a href="email-read.html">Add New Keke</a></li> --}}
                     </ul>
                 </li>
 
