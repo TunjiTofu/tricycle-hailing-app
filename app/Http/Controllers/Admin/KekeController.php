@@ -44,7 +44,7 @@ class KekeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'rider_id' => 'required|string|numeric|unique:' . Keke::class,
+            'rider_id' => 'required|numeric|unique:' . Keke::class,
             'plate_no' => 'required|string|max:9|regex:/Keke-\d\d\d\d/|unique:' . Keke::class,
             'color' => 'required',
         ], [
@@ -119,7 +119,7 @@ class KekeController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         $notification = array(
-            'message' => "Keke With ID: $id Has Been Added",
+            'message' => "Keke With ID: $id Has Been Updated",
             'alert-type' => 'success'
         );
         return redirect()->route('keke.index')->with($notification);

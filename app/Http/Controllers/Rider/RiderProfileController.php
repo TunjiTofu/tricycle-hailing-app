@@ -1,30 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Rider;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
-
-class ProfileController extends Controller
-{ 
+class RiderProfileController extends Controller
+{
     public function index()
     {
         $id = Auth::user()->id;
         $profileData = User::find($id);
-        return view('admin.profile.index', compact('profileData'));
+        return view('rider.profile.index', compact('profileData'));
     }
 
     public function edit()
     {
         $id = Auth::user()->id;
         $editData = User::find($id);
-        return view('admin.profile.edit', compact('editData'));
+        return view('rider.profile.edit', compact('editData'));
     }
 
     public function update(Request $request)
@@ -66,7 +65,7 @@ class ProfileController extends Controller
                 'message' => 'Profile Updated With Image Successfully',
                 'alert-type' => 'success'
             );
-            return redirect()->route('admin.profile')->with($notification);
+            return redirect()->route('rider.profile')->with($notification);
         } else {
             User::findOrFail($id)->update([
                 'username' => $request->username,
@@ -83,13 +82,13 @@ class ProfileController extends Controller
                 'message' => 'Profile Updated Without Image Successfully',
                 'alert-type' => 'success'
             );
-            return redirect()->route('admin.profile')->with($notification);
+            return redirect()->route('rider.profile')->with($notification);
         }
     }
 
     public function passwordChange()
     {
-        return view('admin.profile.change-password');
+        return view('rider.profile.change-password');
     }
 
     public function passwordUpdate(Request $request)
@@ -107,7 +106,7 @@ class ProfileController extends Controller
             $user->save();
 
             session()->flash('message', 'Password Successfully Change');
-            return redirect('/login');
+            return redirect()->route('rider.logout');
         } else {
             $notification = array(
                 'message' => 'Old Password Does Not Match',
