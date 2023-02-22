@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
         Route::post('/rider/profile-save', 'update')->name('rider.profile-save');
         Route::get('/rider/password-change', 'passwordChange')->name('rider.password-change');
         Route::post('/rider/password-update', 'passwordUpdate')->name('rider.password-update');
+        Route::get('/rider/change-status', 'changeStatus')->name('rider.change-status');
     });
 });
 

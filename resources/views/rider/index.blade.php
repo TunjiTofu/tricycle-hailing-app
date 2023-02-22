@@ -1,5 +1,6 @@
 @extends('rider.dashboard')
 @section('rider')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <div class="page-content">
         <div class="container-fluid">
 
@@ -20,6 +21,30 @@
                 </div>
             </div>
             <!-- end page title -->
+
+            <div class="row">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-truncate font-size-14 mb-2">Current Status</p>
+                                    <h4 class="mb-2" id="statusText">{{ ucfirst($profileData->status) }}</h4>
+                                </div>
+                                <div class="avatar-md">
+                                    <span>
+                                        <input data-id="{{ $profileData->id }}" type="checkbox" id="switch1"
+                                            class="toggle-class" switch="none"
+                                            {{ $profileData->status == 'active' ? 'checked' : '' }} />
+                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
+            </div>
+
 
             <div class="row">
                 <div class="col-xl-3 col-md-6">
@@ -439,4 +464,29 @@
         </div>
 
     </div>
+
+    <script>
+        $(function() {
+            $('.toggle-class').click(function() {
+                var status = $(this).prop('checked') == true ? 'active' : 'inactive';
+                var user_id = $(this).data('id');
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '{{ route('rider.change-status') }}',
+                    data: {
+                        'status': status,
+                        'user_id': user_id
+                    },
+                    success: function(data) {
+                        $('#statusText').text(status);
+                        toastr.options.closeButton = true;
+                        toastr.options.closeMethod = 'fadeOut';
+                        toastr.options.closeDuration = 100;
+                        toastr.info(data.success);
+                    }
+                });
+            })
+        })
+    </script>
 @endsection
