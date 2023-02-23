@@ -116,12 +116,5 @@ class RiderProfileController extends Controller
         }
     }
 
-    public function changeStatus(Request $request)
-    {
-        // dd($request);
-        $user = User::find($request->user_id);
-        $user->status = $request->status;
-        $user->save();
-        return response()->json(['success'=>'Status Updated Successfully.']);
-    }
+    
 }

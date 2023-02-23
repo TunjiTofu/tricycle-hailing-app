@@ -5,8 +5,9 @@ use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PlaceController;
+use App\Http\Controllers\Rider\RiderController;
 use App\Http\Controllers\Rider\RiderProfileController;
-use App\Http\Controllers\RiderController;
+use App\Http\Controllers\Rider\TripHistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +58,7 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
     Route::get('/rider/dashboard', [RiderController::class, 'RiderDashboard'])->name('rider.dashboard');
     Route::get('/rider/logout', [RiderController::class, 'destroy'])->name('rider.logout');
+    Route::get('/rider/change-status', [RiderController::class, 'changeStatus'])->name('rider.change.status');
 
     Route::controller(RiderProfileController::class)->group(function () {
         Route::get('/rider/profile', 'index')->name('rider.profile');
@@ -64,7 +66,11 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
         Route::post('/rider/profile-save', 'update')->name('rider.profile-save');
         Route::get('/rider/password-change', 'passwordChange')->name('rider.password-change');
         Route::post('/rider/password-update', 'passwordUpdate')->name('rider.password-update');
-        Route::get('/rider/change-status', 'changeStatus')->name('rider.change-status');
+    });
+
+    Route::controller(TripHistoryController::class)->group(function () {
+        Route::get('/rider/starttrip', 'startTrip')->name('rider.start.trip');
+
     });
 });
 
