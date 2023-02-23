@@ -28,6 +28,20 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="flex-grow-1">
+                                    <p class="text-truncate font-size-14 mb-2">Keke Details</p>
+                                    <h4 class="mb-2">{{ strtoupper($kekeData->plate_no) }}</h4>
+                                </div>
+                                <div class="avatar-md" style="background-color: {{ $kekeData->color }}">
+                                </div>
+                            </div>
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
                                     <p class="text-truncate font-size-14 mb-2">Current Status</p>
                                     <h4 class="mb-2" id="statusText">{{ ucfirst($profileData->status) }}</h4>
                                 </div>
@@ -43,8 +57,53 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <?php
+                                        if($tripHistory != null){
+                                    ?>
+                                    <button type="button" id="stopText" data-id="{{ $profileData->id }}"
+                                        data-keke="{{ $kekeData->plate_no }}"
+                                        class="stop-trip btn btn-success btn-lg waves-effect waves-light"
+                                        style="width: 100%; height: 100%; background-color: red"><i
+                                            class="ri-check-line align-middle me-2"></i>Stop Trip</button>
+                                    <?php
+                                        }else {
+                                    ?>
+                                    <button type="button" id="startText" data-id="{{ $profileData->id }}"
+                                        data-keke="{{ $kekeData->plate_no }}"
+                                        class="start-trip btn btn-success btn-lg waves-effect waves-light"
+                                        style="width: 100%; height: 100%;"><i
+                                            class="ri-check-line align-middle me-2"></i>Start Trip</button>
+                                    <?php
+
+                                        }
+                                    ?>
+
+                                </div>
+                                <div class="avatar-md">
+                                    <span>
+                                        <label id="tripText"></label>
+                                        {{-- <input data-id="{{ $profileData->id }}" type="checkbox" id="switch1"
+                                            class="toggle-class" switch="none"
+                                            {{ $profileData->status == 'active' ? 'checked' : '' }} />
+                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label> --}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
             </div>
 
+            {{-- <div class="row">
+                <div class="col-xl-12">
+                    <div id="map" style="width: auto; height: 500px; border:1px solid red"></div>
+                </div>
+            </div> --}}
 
             <div class="row">
                 <div class="col-xl-3 col-md-6">
@@ -129,342 +188,105 @@
                 </div><!-- end col -->
             </div><!-- end row -->
 
-            <div class="row">
-                <div class="col-xl-6">
-
-                    <div class="card">
-                        <div class="card-body pb-0">
-                            <div class="float-end d-none d-md-inline-block">
-                                <div class="dropdown card-header-dropdown">
-                                    <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <span class="text-muted">Report<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#">Export</a>
-                                        <a class="dropdown-item" href="#">Import</a>
-                                        <a class="dropdown-item" href="#">Download Report</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4 class="card-title mb-4">Email Sent</h4>
-
-                            <div class="text-center pt-3">
-                                <div class="row">
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <div class="d-inline-flex">
-                                            <h5 class="me-2">25,117</h5>
-                                            <div class="text-success font-size-12">
-                                                <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
-                                            </div>
-                                        </div>
-                                        <p class="text-muted text-truncate mb-0">Marketplace</p>
-                                    </div><!-- end col -->
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <div class="d-inline-flex">
-                                            <h5 class="me-2">$34,856</h5>
-                                            <div class="text-success font-size-12">
-                                                <i class="mdi mdi-menu-up font-size-14"> </i>1.2 %
-                                            </div>
-                                        </div>
-                                        <p class="text-muted text-truncate mb-0">Last Week</p>
-                                    </div><!-- end col -->
-                                    <div class="col-sm-4">
-                                        <div class="d-inline-flex">
-                                            <h5 class="me-2">$18,225</h5>
-                                            <div class="text-success font-size-12">
-                                                <i class="mdi mdi-menu-up font-size-14"> </i>1.7 %
-                                            </div>
-                                        </div>
-                                        <p class="text-muted text-truncate mb-0">Last Month</p>
-                                    </div><!-- end col -->
-                                </div><!-- end row -->
-                            </div>
-                        </div>
-                        <div class="card-body py-0 px-2">
-                            <div id="area_chart" class="apex-charts" dir="ltr"></div>
-                        </div>
-                    </div><!-- end card -->
-                </div>
-                <!-- end col -->
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-body pb-0">
-                            <div class="float-end d-none d-md-inline-block">
-                                <div class="dropdown">
-                                    <a class="text-reset" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <span class="text-muted">This Years<i
-                                                class="mdi mdi-chevron-down ms-1"></i></span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#">Today</a>
-                                        <a class="dropdown-item" href="#">Last Week</a>
-                                        <a class="dropdown-item" href="#">Last Month</a>
-                                        <a class="dropdown-item" href="#">This Year</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4 class="card-title mb-4">Revenue</h4>
-
-                            <div class="text-center pt-3">
-                                <div class="row">
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <div>
-                                            <h5>17,493</h5>
-                                            <p class="text-muted text-truncate mb-0">Marketplace</p>
-                                        </div>
-                                    </div><!-- end col -->
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <div>
-                                            <h5>$44,960</h5>
-                                            <p class="text-muted text-truncate mb-0">Last Week</p>
-                                        </div>
-                                    </div><!-- end col -->
-                                    <div class="col-sm-4">
-                                        <div>
-                                            <h5>$29,142</h5>
-                                            <p class="text-muted text-truncate mb-0">Last Month</p>
-                                        </div>
-                                    </div><!-- end col -->
-                                </div><!-- end row -->
-                            </div>
-                        </div>
-                        <div class="card-body py-0 px-2">
-                            <div id="column_line_chart" class="apex-charts" dir="ltr"></div>
-                        </div>
-                    </div><!-- end card -->
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-
-            <div class="row">
-                <div class="col-xl-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="dropdown float-end">
-                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="mdi mdi-dots-vertical"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">Profit</a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                </div>
-                            </div>
-
-                            <h4 class="card-title mb-4">Latest Transactions</h4>
-
-                            <div class="table-responsive">
-                                <table class="table table-centered mb-0 align-middle table-hover table-nowrap">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Status</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th style="width: 120px;">Salary</th>
-                                        </tr>
-                                    </thead><!-- end thead -->
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Charles Casey</h6>
-                                            </td>
-                                            <td>Web Developer</td>
-                                            <td>
-                                                <div class="font-size-13"><i
-                                                        class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active
-                                                </div>
-                                            </td>
-                                            <td>
-                                                23
-                                            </td>
-                                            <td>
-                                                04 Apr, 2021
-                                            </td>
-                                            <td>$42,450</td>
-                                        </tr>
-                                        <!-- end -->
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Alex Adams</h6>
-                                            </td>
-                                            <td>Python Developer</td>
-                                            <td>
-                                                <div class="font-size-13"><i
-                                                        class="ri-checkbox-blank-circle-fill font-size-10 text-warning align-middle me-2"></i>Deactive
-                                                </div>
-                                            </td>
-                                            <td>
-                                                28
-                                            </td>
-                                            <td>
-                                                01 Aug, 2021
-                                            </td>
-                                            <td>$25,060</td>
-                                        </tr>
-                                        <!-- end -->
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Prezy Kelsey</h6>
-                                            </td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>
-                                                <div class="font-size-13"><i
-                                                        class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active
-                                                </div>
-                                            </td>
-                                            <td>
-                                                35
-                                            </td>
-                                            <td>
-                                                15 Jun, 2021
-                                            </td>
-                                            <td>$59,350</td>
-                                        </tr>
-                                        <!-- end -->
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Ruhi Fancher</h6>
-                                            </td>
-                                            <td>React Developer</td>
-                                            <td>
-                                                <div class="font-size-13"><i
-                                                        class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active
-                                                </div>
-                                            </td>
-                                            <td>
-                                                25
-                                            </td>
-                                            <td>
-                                                01 March, 2021
-                                            </td>
-                                            <td>$23,700</td>
-                                        </tr>
-                                        <!-- end -->
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Juliet Pineda</h6>
-                                            </td>
-                                            <td>Senior Web Designer</td>
-                                            <td>
-                                                <div class="font-size-13"><i
-                                                        class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active
-                                                </div>
-                                            </td>
-                                            <td>
-                                                38
-                                            </td>
-                                            <td>
-                                                01 Jan, 2021
-                                            </td>
-                                            <td>$69,185</td>
-                                        </tr>
-                                        <!-- end -->
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Den Simpson</h6>
-                                            </td>
-                                            <td>Web Designer</td>
-                                            <td>
-                                                <div class="font-size-13"><i
-                                                        class="ri-checkbox-blank-circle-fill font-size-10 text-warning align-middle me-2"></i>Deactive
-                                                </div>
-                                            </td>
-                                            <td>
-                                                21
-                                            </td>
-                                            <td>
-                                                01 Sep, 2021
-                                            </td>
-                                            <td>$37,845</td>
-                                        </tr>
-                                        <!-- end -->
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Mahek Torres</h6>
-                                            </td>
-                                            <td>Senior Laravel Developer</td>
-                                            <td>
-                                                <div class="font-size-13"><i
-                                                        class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active
-                                                </div>
-                                            </td>
-                                            <td>
-                                                32
-                                            </td>
-                                            <td>
-                                                20 May, 2021
-                                            </td>
-                                            <td>$55,100</td>
-                                        </tr>
-                                        <!-- end -->
-                                    </tbody><!-- end tbody -->
-                                </table> <!-- end table -->
-                            </div>
-                        </div><!-- end card -->
-                    </div><!-- end card -->
-                </div>
-                <!-- end col -->
-                <div class="col-xl-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="float-end">
-                                <select class="form-select shadow-none form-select-sm">
-                                    <option selected>Apr</option>
-                                    <option value="1">Mar</option>
-                                    <option value="2">Feb</option>
-                                    <option value="3">Jan</option>
-                                </select>
-                            </div>
-                            <h4 class="card-title mb-4">Monthly Earnings</h4>
-
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="text-center mt-4">
-                                        <h5>3475</h5>
-                                        <p class="mb-2 text-truncate">Market Place</p>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                                <div class="col-4">
-                                    <div class="text-center mt-4">
-                                        <h5>458</h5>
-                                        <p class="mb-2 text-truncate">Last Week</p>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                                <div class="col-4">
-                                    <div class="text-center mt-4">
-                                        <h5>9062</h5>
-                                        <p class="mb-2 text-truncate">Last Month</p>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                            </div>
-                            <!-- end row -->
-
-                            <div class="mt-4">
-                                <div id="donut-chart" class="apex-charts"></div>
-                            </div>
-                        </div>
-                    </div><!-- end card -->
-                </div><!-- end col -->
-            </div>
-            <!-- end row -->
         </div>
 
     </div>
 
+
+    {{-- <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap&v=weekly"
+        defer></script>
+
+    <script>
+        function initMap(lat, lng) {
+
+            var myLatLng = {
+                lat,
+                lng
+            };
+
+            console.log('Lat - ' + lat);
+            console.log('Lng - ' + lng);
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+            });
+        }
+    </script> --}}
+
+    <script>
+        $(function() {
+            $('.start-trip').click(function() {
+                console.log('Started');
+                var lat;
+                var lng;
+                var user_id = $(this).data('id');
+                var keke_id = $(this).data('keke');
+                $('#startText').text('Starting Trip...');
+
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+
+                        // initMap(position.coords.latitude, position.coords.longitude)
+
+                        lat = position.coords.latitude;
+                        lng = position.coords.longitude;
+
+                        console.log('Lat - ' + lat);
+                        console.log('Lng - ' + lng);
+                        console.log('User Id - ' + user_id);
+                        console.log('Keke Id - ' + keke_id);
+
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: '{{ route('rider.start.trip') }}',
+                            data: {
+                                'latitude': lat,
+                                'longitude': lng,
+                                'rider_id': user_id,
+                                'keke_id': keke_id,
+                            },
+                            success: function(data) {
+                                $('#startText').text('Stop Trip');
+                                $('#tripText').text('On a Trip');
+                                $('button#startText').css('background-color', 'red');;
+                                toastr.options.closeButton = true;
+                                toastr.options.closeMethod = 'fadeOut';
+                                toastr.options.closeDuration = 100;
+                                toastr.info(data.success);
+                            },
+                            error: function(status) {
+                                toastr.options.closeButton = true;
+                                toastr.options.closeMethod = 'fadeOut';
+                                toastr.options.closeDuration = 100;
+                                toastr.error('Error Starting Trip');
+                            }
+
+                        });
+                    },
+                    function errorCallback(error) {
+                        $('#startText').text('Start Trip');
+                        console.log(error)
+                    }
+                );
+
+            })
+        })
+
+        $(function() {
+            $('.stop-trip').click(function() {
+                console.log('Stopping');
+
+            })
+        })
+    </script>
     <script>
         $(function() {
             $('.toggle-class').click(function() {
@@ -473,7 +295,7 @@
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: '{{ route('rider.change-status') }}',
+                    url: '{{ route('rider.change.status') }}',
                     data: {
                         'status': status,
                         'user_id': user_id
