@@ -63,13 +63,19 @@
                             <div class="d-flex">
                                 <div class="flex-grow-1">
                                     <?php
-                                        if($tripHistory != null){
+                                        if(($tripHistory != null)&& ($tripHistory->status == 1)){
                                     ?>
                                     <button type="button" id="stopText" data-id="{{ $profileData->id }}"
                                         data-keke="{{ $kekeData->plate_no }}"
                                         class="stop-trip btn btn-success btn-lg waves-effect waves-light"
                                         style="width: 100%; height: 100%; background-color: red"><i
                                             class="ri-check-line align-middle me-2"></i>Stop Trip</button>
+
+                                    <button type="button" id="startText" data-id="{{ $profileData->id }}"
+                                        data-keke="{{ $kekeData->plate_no }}"
+                                        class="start-trip btn btn-success btn-lg waves-effect waves-light"
+                                        style="width: 100%; height: 100%; display: none"><i
+                                            class="ri-check-line align-middle me-2"></i>Start Trip</button>
                                     <?php
                                         }else {
                                     ?>
@@ -78,6 +84,12 @@
                                         class="start-trip btn btn-success btn-lg waves-effect waves-light"
                                         style="width: 100%; height: 100%;"><i
                                             class="ri-check-line align-middle me-2"></i>Start Trip</button>
+
+                                            <button type="button" id="stopText" data-id="{{ $profileData->id }}"
+                                                data-keke="{{ $kekeData->plate_no }}"
+                                                class="stop-trip btn btn-success btn-lg waves-effect waves-light"
+                                                style="width: 100%; height: 100%; background-color: red; display: none"><i
+                                                    class="ri-check-line align-middle me-2"></i>Stop Trip</button>
                                     <?php
 
                                         }
@@ -254,9 +266,11 @@
                                 'keke_id': keke_id,
                             },
                             success: function(data) {
-                                $('#startText').text('Stop Trip');
+                                // $('#startText').text('Stop Trip');
                                 $('#tripText').text('On a Trip');
-                                $('button#startText').css('background-color', 'red');;
+                                // $('button#startText').css('background-color', 'red');;
+                                $('#stopText').css('display', 'block');
+                                $('#startText').css('display', 'none');
                                 toastr.options.closeButton = true;
                                 toastr.options.closeMethod = 'fadeOut';
                                 toastr.options.closeDuration = 100;
@@ -283,6 +297,61 @@
         $(function() {
             $('.stop-trip').click(function() {
                 console.log('Stopping');
+                var lat;
+                var lng;
+                var user_id = $(this).data('id');
+                var keke_id = $(this).data('keke');
+                $('#stopText').text('Stoping Trip...');
+
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+
+                        // initMap(position.coords.latitude, position.coords.longitude)
+
+                        lat = position.coords.latitude;
+                        lng = position.coords.longitude;
+
+                        console.log('Lat - ' + lat);
+                        console.log('Lng - ' + lng);
+                        console.log('User Id - ' + user_id);
+                        console.log('Keke Id - ' + keke_id);
+
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: '{{ route('rider.stop.trip') }}',
+                            data: {
+                                'latitude': lat,
+                                'longitude': lng,
+                                'rider_id': user_id,
+                                'keke_id': keke_id,
+                            },
+                            success: function(data) {
+                                $('#stopText').css('display', 'none');
+                                $('#startText').css('display', 'block');
+                                // $('#tripText').text('Trip Ended');
+                                // $('button#startText').css('background-color', 'red');;
+                                
+                                window.location = '{{ route('rider.dashboard') }}'
+                                toastr.options.closeButton = true;
+                                toastr.options.closeMethod = 'fadeOut';
+                                toastr.options.closeDuration = 100;
+                                toastr.info(data.success);
+                            },
+                            error: function(status) {
+                                toastr.options.closeButton = true;
+                                toastr.options.closeMethod = 'fadeOut';
+                                toastr.options.closeDuration = 100;
+                                toastr.error('Error Starting Trip');
+                            }
+
+                        });
+                    },
+                    function errorCallback(error) {
+                        $('#startText').text('Start Trip');
+                        console.log(error)
+                    }
+                );
 
             })
         })

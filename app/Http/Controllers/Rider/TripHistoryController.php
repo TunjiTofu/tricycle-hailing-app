@@ -32,4 +32,17 @@ class TripHistoryController extends Controller
         }
         return response()->json(['success'=>'Trip Started Successfully.']);
     }
+
+    public function stopTrip(Request $request)
+    {
+        $tripHistory = TripHistory::where('rider_id', $request->rider_id)->where('status', 1)->first();
+        $tripHistory->status = 0;
+        $tripHistory->end_trip_time = Carbon::now();
+        $tripHistory->end_location = new Point(lat: $request->latitude, lng: $request->longitude);
+
+        if (!$tripHistory->save()) {
+            return response()->json(['error'=>'Trip Not Ended']);
+        }
+        return response()->json(['success'=>'Trip Ended Successfully.']);
+    }
 }
