@@ -70,6 +70,7 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
 
     Route::controller(TripHistoryController::class)->group(function () {
         Route::get('/rider/starttrip', 'startTrip')->name('rider.start.trip');
+        Route::get('/rider/stoptrip', 'stopTrip')->name('rider.stop.trip');
 
     });
 });
