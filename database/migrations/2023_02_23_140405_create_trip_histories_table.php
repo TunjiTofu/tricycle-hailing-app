@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('status');
             $table->timestamp('start_trip_time');
             $table->point('start_location');
+            $table->timestamp('update_trip_time')->nullable();
             $table->point('current_location')->nullable();
             $table->timestamp('end_trip_time')->nullable();
             $table->point('end_location')->nullable();

@@ -24,6 +24,7 @@ class TripHistoryFactory extends Factory
             'status' => 0,
             'start_trip_time' => Carbon::now(),
             'start_location' => new Point(lat: fake()->latitude($min = -90, $max = 90), lng: fake()->latitude($min = -90, $max = 90)),
+            'update_trip_time' => Carbon::now(),
             'current_location' => new Point(lat: fake()->latitude($min = -90, $max = 90), lng: fake()->latitude($min = -90, $max = 90)),
             'end_trip_time' => Carbon::now(),
             'end_location' => new Point(lat: fake()->latitude($min = -90, $max = 90), lng: fake()->latitude($min = -90, $max = 90)),

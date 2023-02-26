@@ -1,5 +1,7 @@
 @extends('rider.dashboard')
 @section('rider')
+    @vite(['resources/js/app.js'])
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <div class="page-content">
         <div class="container-fluid">
@@ -85,11 +87,11 @@
                                         style="width: 100%; height: 100%;"><i
                                             class="ri-check-line align-middle me-2"></i>Start Trip</button>
 
-                                            <button type="button" id="stopText" data-id="{{ $profileData->id }}"
-                                                data-keke="{{ $kekeData->plate_no }}"
-                                                class="stop-trip btn btn-success btn-lg waves-effect waves-light"
-                                                style="width: 100%; height: 100%; background-color: red; display: none"><i
-                                                    class="ri-check-line align-middle me-2"></i>Stop Trip</button>
+                                    <button type="button" id="stopText" data-id="{{ $profileData->id }}"
+                                        data-keke="{{ $kekeData->plate_no }}"
+                                        class="stop-trip btn btn-success btn-lg waves-effect waves-light"
+                                        style="width: 100%; height: 100%; background-color: red; display: none"><i
+                                            class="ri-check-line align-middle me-2"></i>Stop Trip</button>
                                     <?php
 
                                         }
@@ -331,7 +333,7 @@
                                 $('#startText').css('display', 'block');
                                 // $('#tripText').text('Trip Ended');
                                 // $('button#startText').css('background-color', 'red');;
-                                
+
                                 window.location = '{{ route('rider.dashboard') }}'
                                 toastr.options.closeButton = true;
                                 toastr.options.closeMethod = 'fadeOut';
@@ -355,6 +357,45 @@
 
             })
         })
+
+        function updateTripDB(rider_id, lat, lng) {
+            console.log('Lat - ' + lat);
+            console.log('Lng - ' + lng);
+            console.log('rider_id - ' + rider_id);
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: '{{ route('rider.update.trip') }}',
+                data: {
+                    'latitude': lat,
+                    'longitude': lng,
+                    'rider_id': rider_id,
+                },
+                success: function(data) {
+                    console.log('Data --- '+ data.success);
+                    // $('#stopText').css('display', 'none');
+                    // $('#startText').css('display', 'block');
+                    // $('#tripText').text('Trip Ended');
+                    // $('button#startText').css('background-color', 'red');;
+
+                    // window.location = '{{ route('rider.dashboard') }}'
+                    // toastr.options.closeButton = true;
+                    // toastr.options.closeMethod = 'fadeOut';
+                    // toastr.options.closeDuration = 100;
+                    // toastr.info(data.success);
+                },
+                error: function(data) {
+                    console.log('Error --- '+ data.error);
+                    // toastr.options.closeButton = true;
+                    // toastr.options.closeMethod = 'fadeOut';
+                    // toastr.options.closeDuration = 100;
+                    // toastr.error('Error Starting Trip');
+                }
+
+            });
+
+        }
     </script>
     <script>
         $(function() {
@@ -379,5 +420,15 @@
                 });
             })
         })
+    </script>
+
+    <script>
+        window.onload = function() {
+            Echo.channel('tricycleApp')
+                .listen('SendPosition', (e) => {
+                    console.log(e);
+                    updateTripDB(e.location.rider_id, e.location.lat, e.location.long)
+                });
+        }
     </script>
 @endsection
