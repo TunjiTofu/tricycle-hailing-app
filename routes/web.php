@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\CarMoved;
+use App\Events\SendPosition;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Rider\RiderController;
 use App\Http\Controllers\Rider\RiderProfileController;
 use App\Http\Controllers\Rider\TripHistoryController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,9 +73,20 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
     Route::controller(TripHistoryController::class)->group(function () {
         Route::get('/rider/starttrip', 'startTrip')->name('rider.start.trip');
         Route::get('/rider/stoptrip', 'stopTrip')->name('rider.stop.trip');
+        Route::get('/rider/updatetrip', 'updateTrip')->name('rider.update.trip');
+        Route::get('/rider/updatetripevent/{id}', 'updateTripEvent')->name('rider.update.tripevent');
 
     });
 });
+
+// Route::get('/send', function(){
+//     $lat = -24.344;
+//     $long = 131.031;
+//     $location = ["lat"=>$lat, "long"=>$long];
+//     event(new SendPosition($location));
+//     Log::info('Send Position Success');
+// });
+
 
 Route::get('/app', function(){
     return view('map');
