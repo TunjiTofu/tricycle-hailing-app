@@ -74,10 +74,14 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
         Route::get('/rider/starttrip', 'startTrip')->name('rider.start.trip');
         Route::get('/rider/stoptrip', 'stopTrip')->name('rider.stop.trip');
         Route::get('/rider/updatetrip', 'updateTrip')->name('rider.update.trip');
-        Route::get('/rider/updatetripevent/{id}', 'updateTripEvent')->name('rider.update.tripevent');
+        // Route::get('/rider/updatetripevent/{id}', 'updateTripEvent')->name('rider.update.tripevent');
 
     });
 });
+
+//Update Rider Location
+Route::get('/rider/updatetripevent', [TripHistoryController::class, 'updateTripEvent'])->name('rider.update.tripevent');
+
 
 // Route::get('/send', function(){
 //     $lat = -24.344;

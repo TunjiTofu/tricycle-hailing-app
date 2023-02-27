@@ -358,42 +358,39 @@
             })
         })
 
-        function updateTripDB(rider_id, lat, lng) {
-            console.log('Lat - ' + lat);
-            console.log('Lng - ' + lng);
-            console.log('rider_id - ' + rider_id);
+        function updateTripDB(msg) {
+            console.log('Message - ' + msg);
 
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: '{{ route('rider.update.trip') }}',
-                data: {
-                    'latitude': lat,
-                    'longitude': lng,
-                    'rider_id': rider_id,
-                },
-                success: function(data) {
-                    console.log('Data --- '+ data.success);
-                    // $('#stopText').css('display', 'none');
-                    // $('#startText').css('display', 'block');
-                    // $('#tripText').text('Trip Ended');
-                    // $('button#startText').css('background-color', 'red');;
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
 
-                    // window.location = '{{ route('rider.dashboard') }}'
-                    // toastr.options.closeButton = true;
-                    // toastr.options.closeMethod = 'fadeOut';
-                    // toastr.options.closeDuration = 100;
-                    // toastr.info(data.success);
-                },
-                error: function(data) {
-                    console.log('Error --- '+ data.error);
-                    // toastr.options.closeButton = true;
-                    // toastr.options.closeMethod = 'fadeOut';
-                    // toastr.options.closeDuration = 100;
-                    // toastr.error('Error Starting Trip');
+                    latt = position.coords.latitude;
+                    lngg = position.coords.longitude;
+
+                    console.log('Browser Detected');
+                    console.log('Lat - ' + latt);
+                    console.log('Lng - ' + lngg);
+
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: '{{ route('rider.update.trip') }}',
+                        data: {
+                            'latitude': latt,
+                            'longitude': lngg,
+                        },
+                        success: function(data) {
+                            console.log(data.success);
+                        },
+                        error: function(data) {
+                            console.log(data.success);
+                        }
+                    });
+
+
                 }
+            );
 
-            });
 
         }
     </script>
@@ -427,7 +424,7 @@
             Echo.channel('tricycleApp')
                 .listen('SendPosition', (e) => {
                     console.log(e);
-                    updateTripDB(e.location.rider_id, e.location.lat, e.location.long)
+                    updateTripDB(e.msg.text)
                 });
         }
     </script>
