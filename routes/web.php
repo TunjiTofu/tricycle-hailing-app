@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PlaceController;
+use App\Http\Controllers\Passenger\BookController;
+use App\Http\Controllers\Passenger\PassengerController;
+use App\Http\Controllers\Passenger\PassengerProfileController;
 use App\Http\Controllers\Rider\RiderController;
 use App\Http\Controllers\Rider\RiderProfileController;
 use App\Http\Controllers\Rider\TripHistoryController;
@@ -27,9 +30,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -82,6 +85,23 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
 //Update Rider Location
 Route::get('/rider/updatetripevent', [TripHistoryController::class, 'updateTripEvent'])->name('rider.update.tripevent');
 
+Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
+    Route::get('/dashboard', [PassengerController::class, 'PassengerDashboard'])->name('passenger.dashboard');
+    Route::get('/passenger/logout', [PassengerController::class, 'destroy'])->name('passenger.logout');
+
+    Route::controller(PassengerProfileController::class)->group(function () {
+        Route::get('/passenger/profile', 'index')->name('passenger.profile');
+        Route::get('/passenger/profile-edit', 'edit')->name('passenger.profile-edit');
+        Route::post('/passenger/profile-save', 'update')->name('passenger.profile-save');
+        Route::get('/passenger/password-change', 'passwordChange')->name('passenger.password-change');
+        Route::post('/passenger/password-update', 'passwordUpdate')->name('passenger.password-update');
+    });
+
+    Route::controller(BookController::class)->group(function () {
+        Route::get('/passenger/book', 'index')->name('passenger.book');
+
+    });
+});
 
 // Route::get('/send', function(){
 //     $lat = -24.344;
