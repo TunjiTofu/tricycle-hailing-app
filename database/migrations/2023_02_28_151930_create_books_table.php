@@ -14,7 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('keke_id')->nullable();
+            $table->string('user_id');
+            $table->point('pick_up');
+            $table->point('destination');
+            $table->integer('status');
             $table->timestamps();
         });
     }

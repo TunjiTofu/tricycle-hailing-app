@@ -177,12 +177,22 @@
     <!-- Datatable init js -->
     <script src="{{ asset('backend/assets/js/pages/datatables.init.js') }}"></script>
 
+    <!-- twitter-bootstrap-wizard js -->
+    <script src="{{ asset('backend/assets/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
+
+    <script src="{{ asset('backend/assets/libs/twitter-bootstrap-wizard/prettify.js') }}"></script>
+
+    <!-- form wizard init -->
+    <script src="{{ asset('backend/assets/js/pages/form-wizard.init.js') }}"></script>
+
 
     <!-- App js -->
     <script src="{{ asset('backend/assets/js/pages/form-advanced.init.js') }}"></script>
 
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
     <script src="{{ asset('backend/assets/js/pages/dashboard.init.js') }}"></script>
+
+
 
     <!--Toaster JS Link -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -219,11 +229,11 @@
         });
     </script>
 
- <!-- Sweet Alert -->
-    {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>--}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script> 
+    <!-- Sweet Alert -->
+    {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
-    <script src="{{ asset('backend/assets/js/code.js') }}"></script> 
+    <script src="{{ asset('backend/assets/js/code.js') }}"></script>
 
     {{-- <!-- Sweet Alerts js -->
     <script src="{{ asset('backend/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
