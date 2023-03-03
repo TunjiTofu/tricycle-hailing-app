@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('user_id');
             $table->point('pick_up');
             $table->point('destination');
+            $table->integer('number_passengers');
             $table->integer('status');
             $table->timestamps();
         });
