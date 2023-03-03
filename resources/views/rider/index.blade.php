@@ -334,11 +334,14 @@
                                 // $('#tripText').text('Trip Ended');
                                 // $('button#startText').css('background-color', 'red');;
 
-                                window.location = '{{ route('rider.dashboard') }}'
                                 toastr.options.closeButton = true;
                                 toastr.options.closeMethod = 'fadeOut';
-                                toastr.options.closeDuration = 100;
+                                toastr.options.closeDuration = 200;
                                 toastr.info(data.success);
+                                setTimeout(() => {
+                                    window.location =
+                                        '{{ route('rider.dashboard') }}'
+                                }, 5000);
                             },
                             error: function(status) {
                                 toastr.options.closeButton = true;

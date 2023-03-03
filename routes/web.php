@@ -100,6 +100,7 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::controller(BookController::class)->group(function () {
         Route::get('/passenger/book', 'index')->name('passenger.book');
         Route::post('/passenger/book/select', 'selectRide')->name('passenger.book.select');
+        Route::post('/passenger/book/trip', 'storeBookingDetails')->name('passenger.book.trip');
         Route::get('/passenger/book/details', 'storeBookDetailsSession')->name('book.trip.session');
 
     });
