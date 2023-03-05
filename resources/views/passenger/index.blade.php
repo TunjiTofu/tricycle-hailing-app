@@ -30,9 +30,16 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="flex-grow-1">
-                                    <a href="{{ route('passenger.book') }}" class="btn btn-primary btn-lg" style="width: 100%; height: 100%;">Book a Ride</a>  
+                                    @if ($checkUser)
+                                        <a href="{{ route('passenger.end') }}" class="btn btn-danger btn-lg"
+                                            style="width: 100%; height: 100%;">End Trip</a>
+                                    @else
+                                        <a href="{{ route('passenger.book') }}" class="btn btn-primary btn-lg"
+                                            style="width: 100%; height: 100%;">Book a Ride</a>
+                                    @endif
+
                                 </div>
-                                <div class="avatar-md" >
+                                <div class="avatar-md">
                                 </div>
                             </div>
                         </div><!-- end cardbody -->
@@ -64,7 +71,7 @@
                             <div class="d-flex">
                                 <div class="flex-grow-1">
                                     <?php
-                                       // if(($tripHistory != null)&& ($tripHistory->status == 1)){
+                                    // if(($tripHistory != null)&& ($tripHistory->status == 1)){
                                     ?>
                                     {{-- <button type="button" id="stopText" data-id="{{ $profileData->id }}"
                                         data-keke="{{ $kekeData->plate_no }}"
@@ -78,7 +85,7 @@
                                         style="width: 100%; height: 100%; display: none"><i
                                             class="ri-check-line align-middle me-2"></i>Start Trip</button> --}}
                                     <?php
-                                      //  }else {
+                                    //  }else {
                                     ?>
                                     {{-- <button type="button" id="startText" data-id="{{ $profileData->id }}"
                                         data-keke="{{ $kekeData->plate_no }}"
@@ -92,8 +99,8 @@
                                         style="width: 100%; height: 100%; background-color: red; display: none"><i
                                             class="ri-check-line align-middle me-2"></i>Stop Trip</button> --}}
                                     <?php
-
-                                      //  }
+                                    
+                                    //  }
                                     ?>
 
                                 </div>
@@ -201,99 +208,183 @@
                 </div><!-- end col -->
             </div><!-- end row -->
 
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Order History</h3>
+                            <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Date</th>
+                                        <th>Keke Details</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @php($i = 1)
+                                    @foreach ($oderHistory as $history)
+                                        <tr>
+                                            <td>{{ $i++ }}</td>
+                                            <td>
+                                                {{ Carbon\Carbon::parse($history->created_at)->toDayDateTimeString() }} <br>
+                                                <strong>({{ Carbon\Carbon::parse($history->created_at)->diffForHumans() }})</strong>
+                                            </td>
+                                            <td>
+                                                Keke ID: {{ $history->keke_id }} <br>
+                                                Rider: {{ $history->user->username }}
+                                            </td>
+                                            <td>
+                                                <div class="rating-star">
+                                                    <input type="text" id="rider-id" value="{{ $history->rider_id }}">
+                                                    <input type="hidden" id="rider-rating" class="rating"
+                                                        data-id="{{ $history->rider_id }}"
+                                                        data-filled="mdi mdi-star text-primary"
+                                                        data-empty="mdi mdi-star-outline text-primary"
+                                                        data-fractions="2" />
+                                                </div>
+                                                {{-- <button class="btn btn-info waves-effect waves-light" data-bs-toggle="modal"
+                                                data-bs-target="#myModal"> Rate Rider</button> --}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+
+            {{-- Ajax Loader Spinner --}}
+            <div class="bground" style="display: none">
+                <div class="spinner">
+                </div>
+            </div>
+
         </div>
 
     </div>
 
-
-    {{-- <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap&v=weekly"
-        defer></script>
-
-    <script>
-        function initMap(lat, lng) {
-
-            var myLatLng = {
-                lat,
-                lng
-            };
-
-            console.log('Lat - ' + lat);
-            console.log('Lng - ' + lng);
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 15,
-                center: myLatLng
-            });
-
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-            });
-        }
-    </script> --}}
-
     <script>
         $(function() {
-            $('.start-trip').click(function() {
-                console.log('Started');
-                var lat;
-                var lng;
-                var user_id = $(this).data('id');
-                var keke_id = $(this).data('keke');
-                $('#startText').text('Starting Trip...');
+                $('.rating-star').click(function() {
+                    console.log('Rating Clicked');
+                    $('.bground').show();
+                    var rating = document.getElementById("rider-rating").value;
+                    var rider_id = document.getElementById("rider-id").value;
+                    // var rider_id = $(this).data('id');
+                    console.log('Rating ' + rating);
+                    console.log('Rider ' + rider_id);
 
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
 
-                        // initMap(position.coords.latitude, position.coords.longitude)
-
-                        lat = position.coords.latitude;
-                        lng = position.coords.longitude;
-
-                        console.log('Lat - ' + lat);
-                        console.log('Lng - ' + lng);
-                        console.log('User Id - ' + user_id);
-                        console.log('Keke Id - ' + keke_id);
-
-                        $.ajax({
-                            type: "GET",
-                            dataType: "json",
-                            url: '{{ route('rider.start.trip') }}',
-                            data: {
-                                'latitude': lat,
-                                'longitude': lng,
-                                'rider_id': user_id,
-                                'keke_id': keke_id,
-                            },
-                            success: function(data) {
-                                // $('#startText').text('Stop Trip');
-                                $('#tripText').text('On a Trip');
-                                // $('button#startText').css('background-color', 'red');;
-                                $('#stopText').css('display', 'block');
-                                $('#startText').css('display', 'none');
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: '{{ route('passenger.trip.rate') }}',
+                        data: {
+                            'rider_id': rider_id,
+                            'rating': rating,
+                        },
+                        success: function(data) {
+                            if (data.success) {
+                                console.log(data.success);
                                 toastr.options.closeButton = true;
                                 toastr.options.closeMethod = 'fadeOut';
-                                toastr.options.closeDuration = 100;
+                                toastr.options.closeDuration = 3000;
                                 toastr.info(data.success);
-                            },
-                            error: function(status) {
-                                toastr.options.closeButton = true;
-                                toastr.options.closeMethod = 'fadeOut';
-                                toastr.options.closeDuration = 100;
-                                toastr.error('Error Starting Trip');
                             }
 
-                        });
-                    },
-                    function errorCallback(error) {
-                        $('#startText').text('Start Trip');
-                        console.log(error)
-                    }
-                );
+                            if (data.error) {
+                                console.log(data.error);
+                                toastr.options.closeButton = true;
+                                toastr.options.closeMethod = 'fadeOut';
+                                toastr.options.closeDuration = 3000;
+                                toastr.error(data.error);
+                            }
+                        },
+                        error: function(status) {
+                            toastr.options.closeButton = true;
+                            toastr.options.closeMethod = 'fadeOut';
+                            toastr.options.closeDuration = 100;
+                            toastr.error('Error Rating Trip');
+                        },
+                        complete: function() {
+                            $('.bground').hide();
+                        }
 
+                    });
+                })
             })
-        })
+
+
+            <
+            script >
+            $(function() {
+                $('.start-trip').click(function() {
+                    console.log('Started');
+                    var lat;
+                    var lng;
+                    var user_id = $(this).data('id');
+                    var keke_id = $(this).data('keke');
+                    $('#startText').text('Starting Trip...');
+
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+
+                            // initMap(position.coords.latitude, position.coords.longitude)
+
+                            lat = position.coords.latitude;
+                            lng = position.coords.longitude;
+
+                            console.log('Lat - ' + lat);
+                            console.log('Lng - ' + lng);
+                            console.log('User Id - ' + user_id);
+                            console.log('Keke Id - ' + keke_id);
+
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: '{{ route('rider.start.trip') }}',
+                                data: {
+                                    'latitude': lat,
+                                    'longitude': lng,
+                                    'rider_id': user_id,
+                                    'keke_id': keke_id,
+                                },
+                                success: function(data) {
+                                    // $('#startText').text('Stop Trip');
+                                    $('#tripText').text('On a Trip');
+                                    // $('button#startText').css('background-color', 'red');;
+                                    $('#stopText').css('display', 'block');
+                                    $('#startText').css('display', 'none');
+                                    toastr.options.closeButton = true;
+                                    toastr.options.closeMethod = 'fadeOut';
+                                    toastr.options.closeDuration = 100;
+                                    toastr.info(data.success);
+                                },
+                                error: function(status) {
+                                    toastr.options.closeButton = true;
+                                    toastr.options.closeMethod = 'fadeOut';
+                                    toastr.options.closeDuration = 100;
+                                    toastr.error('Error Starting Trip');
+                                }
+
+                            });
+                        },
+                        function errorCallback(error) {
+                            $('#startText').text('Start Trip');
+                            console.log(error)
+                        }
+                    );
+
+                })
+            })
 
         $(function() {
             $('.stop-trip').click(function() {

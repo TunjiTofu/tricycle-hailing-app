@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Passenger;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Keke;
 use App\Models\TripHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,10 +40,12 @@ class BookController extends Controller
         $id = Auth::user()->id;
         $profileData = User::find($id);
         $keke_id = $request->keke_id;
+        $rider = Keke::where('plate_no', $keke_id)->first();
+        // $rider_id = $rider->rider_id;
         $request->validate([
             'keke_id' => 'required|string|max:9|regex:/Keke-\d\d\d\d/',
         ]);
-        $numberOfBookings = Book::where('keke_id', $keke_id,)->where('status', 1)->get();
+        $numberOfBookings = Book::where('keke_id', $keke_id)->where('status', 1)->get();
         $count = count($numberOfBookings);
         // dd($count);
         if ($count > 0) {
@@ -63,7 +66,7 @@ class BookController extends Controller
             );
             return redirect()->back()->with($notification);
         }
-        return view('passenger.book.details', compact('numberOfBookings', 'spaceAvailable', 'keke_id', 'profileData'));
+        return view('passenger.book.details', compact('numberOfBookings', 'spaceAvailable', 'keke_id', 'rider', 'profileData'));
     }
 
     public function storeBookingDetails(Request $request)
@@ -73,34 +76,38 @@ class BookController extends Controller
 
     public function storeBookDetailsSession(Request $request)
     {
-        // dd($request);
-        // if ($request->session()->get('book_details')) {
-        //     $request->session()->forget('book_details');
-        // }
-        $saveBooking = Book::create([
-            'id' => Uuid::generate()->string,
-            'keke_id' => $request->keke_id,
-            'user_id' => $request->user_id,
-            'pick_up' => new Point(lat: $request->pickup_lat, lng: $request->pickup_lng),
-            'destination' => new Point(lat: $request->destination_lat, lng: $request->destination_lng),
-            'number_passengers' => $request->passengers,
-            'status' => 1,
-        ]);
-
-        // $storeDetails = Session::put('book_details', [
-        //     'user_id' => $request->get('user_id'),
-        //     'pickup_lat' => $request->get('pickup_lat'),
-        //     'pickup_lng' => $request->get('pickup_lng'),
-        //     'destination_lat' => $request->get('destination_lat'),
-        //     'destination_lng' => $request->get('destination_lng'),
-        // ]);
-
-        // dd(Session::get('book_details')['pickup_lng']);
-        // dd($request->session()->get('book_details'));
-
-        if (!$saveBooking) {
-            return response()->json(['error' => 'Booking Details Not Saved']);
+        $checkUser = Book::where('user_id', $request->user_id)->where('status', 1)->first();
+        // dd($checkUser);
+        if ($checkUser == null) {
+            $saveBooking = Book::create([
+                'id' => Uuid::generate()->string,
+                'rider_id' => $request->rider_id,
+                'keke_id' => $request->keke_id,
+                'user_id' => $request->user_id,
+                'pick_up' => new Point(lat: $request->pickup_lat, lng: $request->pickup_lng),
+                'destination' => new Point(lat: $request->destination_lat, lng: $request->destination_lng),
+                'number_passengers' => $request->passengers,
+                'status' => 1,
+            ]);
+            if (!$saveBooking) {
+                return response()->json(['error' => 'Booking Details Not Saved']);
+            }
+            return response()->json(['success' => 'Booking Details Saved. Your Ride Will Be With You Shortly']);
         }
-        return response()->json(['success' => 'Booking Details Saved. Your Ride Will Be With You Shortly']);
+        return response()->json(['error' => 'You are currently on a trip!. Please end the trip before booking.']);
+    }
+
+    public function endTrip()
+    {
+        $id = Auth::user()->id;
+        // dd($id);
+        $checkUser = Book::where('user_id', $id)->where('status', 1)->first();
+        $checkUser->status = 0;
+        $checkUser->save();
+        $notification = array(
+            'message' => 'Your current trip has ended',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 }

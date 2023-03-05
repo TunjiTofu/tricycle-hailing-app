@@ -19,4 +19,9 @@ class Book extends Model
         'destination' => LocationCast::class,
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'rider_id','id');
+    }
+
 }

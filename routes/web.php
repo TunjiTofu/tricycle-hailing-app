@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PlaceController;
 use App\Http\Controllers\Passenger\BookController;
 use App\Http\Controllers\Passenger\PassengerController;
 use App\Http\Controllers\Passenger\PassengerProfileController;
+use App\Http\Controllers\Passenger\RatingController;
 use App\Http\Controllers\Rider\RiderController;
 use App\Http\Controllers\Rider\RiderProfileController;
 use App\Http\Controllers\Rider\TripHistoryController;
@@ -85,6 +86,8 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
 //Update Rider Location
 Route::get('/rider/updatetripevent', [TripHistoryController::class, 'updateTripEvent'])->name('rider.update.tripevent');
 
+
+//Passenger
 Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::get('/dashboard', [PassengerController::class, 'PassengerDashboard'])->name('passenger.dashboard');
     Route::get('/passenger/logout', [PassengerController::class, 'destroy'])->name('passenger.logout');
@@ -102,7 +105,12 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
         Route::post('/passenger/book/select', 'selectRide')->name('passenger.book.select');
         Route::post('/passenger/book/trip', 'storeBookingDetails')->name('passenger.book.trip');
         Route::get('/passenger/book/details', 'storeBookDetailsSession')->name('book.trip.session');
+        Route::get('/passenger/book/endtrip', 'endTrip')->name('passenger.end');
 
+    });
+
+    Route::controller(RatingController::class)->group(function () {
+        Route::get('/passenger/trip/rate', 'rateTrip')->name('passenger.trip.rate');
     });
 });
 

@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('keke_id')->nullable();
-            $table->string('rider_id')->nullable();
+            $table->string('rider_id');
+            $table->decimal('rating',2,1);
             $table->string('user_id');
-            $table->point('pick_up');
-            $table->point('destination');
-            $table->integer('number_passengers');
-            $table->integer('status');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('ratings');
     }
 };
