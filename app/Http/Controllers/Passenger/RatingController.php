@@ -15,7 +15,7 @@ class RatingController extends Controller
         // dd($request);
         $id = Auth::user()->id;
         $request->validate([
-            'rider_id' => ['required', 'integer'],
+            'rider_id' => ['required', 'integer'], 
             'rating' => ['required', 'min:0', 'max:5'],
         ]);
 
