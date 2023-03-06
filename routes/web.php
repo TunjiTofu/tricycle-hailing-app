@@ -61,6 +61,7 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
     Route::resource('place', PlaceController::class);
 });
 
+//RIDER
 Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
     Route::get('/rider/dashboard', [RiderController::class, 'RiderDashboard'])->name('rider.dashboard');
     Route::get('/rider/logout', [RiderController::class, 'destroy'])->name('rider.logout');

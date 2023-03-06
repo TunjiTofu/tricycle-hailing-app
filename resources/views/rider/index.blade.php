@@ -101,10 +101,6 @@
                                 <div class="avatar-md">
                                     <span>
                                         <label id="tripText"></label>
-                                        {{-- <input data-id="{{ $profileData->id }}" type="checkbox" id="switch1"
-                                            class="toggle-class" switch="none"
-                                            {{ $profileData->status == 'active' ? 'checked' : '' }} />
-                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label> --}}
                                     </span>
                                 </div>
                             </div>
@@ -112,12 +108,6 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
             </div>
-
-            {{-- <div class="row">
-                <div class="col-xl-12">
-                    <div id="map" style="width: auto; height: 500px; border:1px solid red"></div>
-                </div>
-            </div> --}}
 
             <div class="row">
                 <div class="col-xl-3 col-md-6">
@@ -202,42 +192,20 @@
                 </div><!-- end col -->
             </div><!-- end row -->
 
+            {{-- Ajax Loader Spinner --}}
+            <div class="bground" style="display: none">
+                <div class="spinner">
+                </div>
+            </div>
+
         </div>
 
     </div>
-
-
-    {{-- <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap&v=weekly"
-        defer></script>
-
-    <script>
-        function initMap(lat, lng) {
-
-            var myLatLng = {
-                lat,
-                lng
-            };
-
-            console.log('Lat - ' + lat);
-            console.log('Lng - ' + lng);
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 15,
-                center: myLatLng
-            });
-
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-            });
-        }
-    </script> --}}
-
     <script>
         $(function() {
             $('.start-trip').click(function() {
                 console.log('Started');
+                $('.bground').show();
                 var lat;
                 var lng;
                 var user_id = $(this).data('id');
@@ -275,7 +243,7 @@
                                 $('#startText').css('display', 'none');
                                 toastr.options.closeButton = true;
                                 toastr.options.closeMethod = 'fadeOut';
-                                toastr.options.closeDuration = 100;
+                                toastr.options.closeDuration = 3000;
                                 toastr.info(data.success);
                             },
                             error: function(status) {
@@ -283,6 +251,13 @@
                                 toastr.options.closeMethod = 'fadeOut';
                                 toastr.options.closeDuration = 100;
                                 toastr.error('Error Starting Trip');
+                            },
+                            complete: function() {
+                                $('.bground').hide();
+                                setTimeout(() => {
+                                    window.location =
+                                        '{{ route('rider.dashboard') }}'
+                                }, 3000);
                             }
 
                         });
@@ -299,6 +274,7 @@
         $(function() {
             $('.stop-trip').click(function() {
                 console.log('Stopping');
+                $('.bground').show();
                 var lat;
                 var lng;
                 var user_id = $(this).data('id');
@@ -336,18 +312,21 @@
 
                                 toastr.options.closeButton = true;
                                 toastr.options.closeMethod = 'fadeOut';
-                                toastr.options.closeDuration = 200;
+                                toastr.options.closeDuration = 3000;
                                 toastr.info(data.success);
-                                setTimeout(() => {
-                                    window.location =
-                                        '{{ route('rider.dashboard') }}'
-                                }, 5000);
                             },
                             error: function(status) {
                                 toastr.options.closeButton = true;
                                 toastr.options.closeMethod = 'fadeOut';
-                                toastr.options.closeDuration = 100;
+                                toastr.options.closeDuration = 2000;
                                 toastr.error('Error Starting Trip');
+                            },
+                            complete: function() {
+                                $('.bground').hide();
+                                setTimeout(() => {
+                                    window.location =
+                                        '{{ route('rider.dashboard') }}'
+                                }, 3000);
                             }
 
                         });
@@ -396,6 +375,10 @@
 
 
         }
+
+        function notifyRider(msg) {
+            console.log('Notify - Rider - ' + msg);
+        }
     </script>
     <script>
         $(function() {
@@ -428,6 +411,14 @@
                 .listen('SendPosition', (e) => {
                     console.log(e);
                     updateTripDB(e.msg.text)
+                });
+        }
+
+        window.onload = function() {
+            Echo.channel('tricycleApp')
+                .listen('BookRide', (e) => {
+                    console.log(e);
+                    notifyRider(e.msg.text)
                 });
         }
     </script>
