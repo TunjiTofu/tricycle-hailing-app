@@ -272,7 +272,7 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
             </div><!-- end row -->
-
+ 
             {{-- Ajax Loader Spinner --}}
             <div class="bground" style="display: none">
                 <div class="spinner">
@@ -467,43 +467,47 @@
             })
         })
 
-        function updateTripDB(msg) {
-            console.log('Message - ' + msg);
 
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-
-                    latt = position.coords.latitude;
-                    lngg = position.coords.longitude;
-
-                    console.log('Browser Detected');
-                    console.log('Lat - ' + latt);
-                    console.log('Lng - ' + lngg);
-
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        url: '{{ route('rider.update.trip') }}',
-                        data: {
-                            'latitude': latt,
-                            'longitude': lngg,
-                        },
-                        success: function(data) {
-                            console.log(data.success);
-                        },
-                        error: function(data) {
-                            console.log(data.success);
-                        }
-                    });
-
-
-                }
-            );
-
-
+        function notifyRider(msg) {
+            console.log('Book Ride Msg - '+ msg);
         }
+        // function updateTripDB(msg) {
+        //     console.log('Message - ' + msg);
+
+        //     navigator.geolocation.getCurrentPosition(
+        //         function(position) {
+
+        //             latt = position.coords.latitude;
+        //             lngg = position.coords.longitude;
+
+        //             console.log('Browser Detected');
+        //             console.log('Lat - ' + latt);
+        //             console.log('Lng - ' + lngg);
+
+        //             $.ajax({
+        //                 type: "GET",
+        //                 dataType: "json",
+        //                 url: '{{ route('rider.update.trip') }}',
+        //                 data: {
+        //                     'latitude': latt,
+        //                     'longitude': lngg,
+        //                 },
+        //                 success: function(data) {
+        //                     console.log(data.success);
+        //                 },
+        //                 error: function(data) {
+        //                     console.log(data.success);
+        //                 }
+        //             });
+
+
+        //         }
+        //     );
+
+
+        // }
     </script>
-    <script>
+    {{-- <script>
         $(function() {
             $('.toggle-class').click(function() {
                 var status = $(this).prop('checked') == true ? 'active' : 'inactive';
@@ -526,15 +530,15 @@
                 });
             })
         })
-    </script>
+    </script> --}}
 
-    <script>
+    {{-- <script>
         window.onload = function() {
             Echo.channel('tricycleApp')
-                .listen('SendPosition', (e) => {
+                .listen('BookRide', (e) => {
                     console.log(e);
-                    updateTripDB(e.msg.text)
+                    notifyRider(e.msg.text)
                 });
         }
-    </script>
+    </script> --}}
 @endsection
