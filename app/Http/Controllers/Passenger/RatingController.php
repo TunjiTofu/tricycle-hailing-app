@@ -19,10 +19,11 @@ class RatingController extends Controller
             'rating' => ['required', 'min:0', 'max:5'],
         ]);
 
-        $checkRating = Rating::where('user_id', $id)->where('rider_id', $request->rider_id)->first();
+        $checkRating = Rating::where('book_id', $request->book_id)->first();
         if (!$checkRating) {
             $saveRating = Rating::create([
                 'id' => Uuid::generate()->string,
+                'book_id' => $request->book_id,
                 'rider_id' => $request->rider_id,
                 'rating' => $request->rating,
                 'user_id' => $id,

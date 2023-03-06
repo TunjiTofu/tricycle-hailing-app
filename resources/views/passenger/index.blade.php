@@ -220,7 +220,7 @@
                                         <th>S/N</th>
                                         <th>Date</th>
                                         <th>Keke Details</th>
-                                        <th>Actions</th>
+                                        <th>Rating</th>
                                     </tr>
                                 </thead>
 
@@ -237,16 +237,28 @@
                                             <td>
                                                 Keke ID: {{ $history->keke_id }} <br>
                                                 Rider: {{ $history->user->username }}
+                                                {{-- Rating: {{ $history->rating->rating }} --}}
                                             </td>
                                             <td>
-                                                <div class="rating-star">
-                                                    <input type="text" id="rider-id" value="{{ $history->rider_id }}">
-                                                    <input type="hidden" id="rider-rating" class="rating"
-                                                        data-id="{{ $history->rider_id }}"
+                                                
+                                                @if (isset($history->rating->rating))
+                                                    <input type="hidden" class="rating"
                                                         data-filled="mdi mdi-star text-primary"
-                                                        data-empty="mdi mdi-star-outline text-primary"
-                                                        data-fractions="2" />
-                                                </div>
+                                                        data-empty="mdi mdi-star-outline text-primary" data-fractions="2"
+                                                        value="{{ $history->rating->rating }}" data-readonly />
+                                                @else
+                                                <input type="text" id="rider-id" value="{{ $history->rider_id }}">
+                                                <input type="text" id="book-id" value="{{ $history->id }}">
+                                                    <div class="rating-star">
+                                                        <input type="hidden" id="rider-rating" class="rating"
+                                                            data-id="{{ $history->rider_id }}"
+                                                            data-filled="mdi mdi-star text-primary"
+                                                            data-empty="mdi mdi-star-outline text-primary"
+                                                            data-fractions="2" />
+                                                    </div>
+                                                @endif
+
+
                                                 {{-- <button class="btn btn-info waves-effect waves-light" data-bs-toggle="modal"
                                                 data-bs-target="#myModal"> Rate Rider</button> --}}
                                             </td>
@@ -278,9 +290,11 @@
                     $('.bground').show();
                     var rating = document.getElementById("rider-rating").value;
                     var rider_id = document.getElementById("rider-id").value;
+                    var book_id = document.getElementById("book-id").value;
                     // var rider_id = $(this).data('id');
                     console.log('Rating ' + rating);
                     console.log('Rider ' + rider_id);
+                    console.log('Booking ' + book_id);
 
 
                     $.ajax({
@@ -290,6 +304,7 @@
                         data: {
                             'rider_id': rider_id,
                             'rating': rating,
+                            'book_id': book_id,
                         },
                         success: function(data) {
                             if (data.success) {
@@ -316,6 +331,10 @@
                         },
                         complete: function() {
                             $('.bground').hide();
+                            setTimeout(() => {
+                                        window.location =
+                                            '{{ route('passenger.dashboard') }}'
+                                    }, 3000);
                         }
 
                     });

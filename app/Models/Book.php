@@ -24,4 +24,8 @@ class Book extends Model
         return $this->belongsTo(User::class,'rider_id','id');
     }
 
+    public function rating()
+    {
+        return $this->belongsTo(Rating::class, 'id', 'book_id');
+    }
 }

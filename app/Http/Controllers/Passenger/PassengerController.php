@@ -16,7 +16,7 @@ class PassengerController extends Controller
         $id = Auth::user()->id;
         $profileData = User::find($id);
         $checkUser = Book::where('user_id', $id)->where('status', 1)->first();
-        $oderHistory = Book::where('user_id', $id)->where('status', 0)->get();
+        $oderHistory = Book::where('user_id', $id)->where('status', 0)->orderBy('created_at', 'desc')->get();
         return view('passenger.index', compact('profileData', 'checkUser','oderHistory'));
     }
 

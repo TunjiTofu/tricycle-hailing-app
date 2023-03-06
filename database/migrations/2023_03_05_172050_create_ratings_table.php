@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('book_id');
             $table->string('rider_id');
             $table->decimal('rating',2,1);
             $table->string('user_id');

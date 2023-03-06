@@ -12,4 +12,6 @@ class Rating extends Model
     use HasUuids;
 
     protected $guarded = [];
+
+    
 }
