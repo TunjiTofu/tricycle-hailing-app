@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Passenger;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,9 @@ class PassengerController extends Controller
     {
         $id = Auth::user()->id;
         $profileData = User::find($id);
-        // $kekeData = Keke::firstWhere('rider_id', $id);
-        // $tripHistory = TripHistory::where('rider_id', $id)->where('status', 1)->first();
-        return view('passenger.index', compact('profileData'));
+        $checkUser = Book::where('user_id', $id)->where('status', 1)->first();
+        $oderHistory = Book::where('user_id', $id)->where('status', 0)->orderBy('created_at', 'desc')->get();
+        return view('passenger.index', compact('profileData', 'checkUser','oderHistory'));
     }
 
     public function destroy()

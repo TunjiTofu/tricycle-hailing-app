@@ -45,7 +45,55 @@
     <!-- Toaster CDN CSS Link -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
-    
+    <!-- Style for SPINNER -->
+    <style>
+        /* Center the loader */
+        .bground {
+            background-color: #5153537e;
+            opacity: 0.5;
+            position: absolute;
+            left: 0%;
+            top: 0%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .spinner {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 120px;
+            height: 120px;
+            margin: -76px 0 0 -76px;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            border-top-color: transparent;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 
 </head>
 
@@ -241,6 +289,11 @@
 
     <!-- Sweet alert init js-->
     <script src="{{ asset('backend/assets/js/pages/sweet-alerts.init.js') }}"></script> --}}
+
+     <!-- Bootstrap rating js -->
+     <script src="{{ asset('backend/assets/libs/bootstrap-rating/bootstrap-rating.min.js') }}"></script>
+
+     <script src="{{ asset('backend/assets/js/pages/rating-init.js') }}"></script>
 
 </body>
 
