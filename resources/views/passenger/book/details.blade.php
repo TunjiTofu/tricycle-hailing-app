@@ -164,10 +164,10 @@
                     function(position) {
 
                         var keke_id = document.getElementById("keke-id").value;
-                        var rider_id = document.getElementById("rider-id").value;
-                        var passengers = document.getElementById("passengers").value;
-                        var destination_lat = document.getElementById("destination-lat").value;
-                        var destination_lng = document.getElementById("destination-lng").value;
+                        var rider_id = +document.getElementById("rider-id").value;
+                        var passengers = +document.getElementById("passengers").value;
+                        var destination_lat = +document.getElementById("destination-lat").value;
+                        var destination_lng = +document.getElementById("destination-lng").value;
 
 
                         var current_lat = position.coords.latitude;

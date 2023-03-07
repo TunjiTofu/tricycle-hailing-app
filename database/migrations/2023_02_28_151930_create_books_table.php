@@ -22,6 +22,7 @@ return new class extends Migration
             $table->point('destination');
             $table->integer('number_passengers');
             $table->integer('status');
+            $table->integer('read');
             $table->timestamps();
         });
     }

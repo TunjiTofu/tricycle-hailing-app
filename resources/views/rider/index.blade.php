@@ -107,6 +107,25 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="{{ route('rider.order') }}">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <p class="text-truncate font-size-14 mb-2">Orders</p>
+                                        <h4 class="mb-2">Pending Orders</h4>
+                                    </div>
+                                    <div class="avatar-md">
+                                        <span class="avatar-title bg-light rounded-3">
+                                            <h4 class="mb-2 text-danger" id="notification">{{ $orderCount }}</h4>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
             </div>
 
             <div class="row">
@@ -376,8 +395,23 @@
 
         }
 
-        function notifyRider(msg) {
-            console.log('Notify - Rider - ' + msg);
+        function notifyRider(e) {
+            var orderNotification = +document.getElementById("notification").textContent;
+            var newOrder = 0;
+            console.log('Order Notification ' + orderNotification);
+            console.log('New Order ' + newOrder);
+            console.log(e.msg.rider_id);
+            var rider_id = "{{ $profileData->id }}";
+            if (e.msg.rider_id == rider_id) {
+                console.log(e);
+                console.log(rider_id);
+                newOrder = orderNotification + 1;
+                $('#notification').text(newOrder);
+                toastr.options.closeButton = true;
+                toastr.options.closeMethod = 'fadeOut';
+                toastr.options.closeDuration = 5000;
+                toastr.info('A New Order Has Been Made');
+            }
         }
     </script>
     <script>
@@ -418,7 +452,7 @@
             Echo.channel('tricycleApp')
                 .listen('BookRide', (e) => {
                     console.log(e);
-                    notifyRider(e.msg.text)
+                    notifyRider(e)
                 });
         }
     </script>

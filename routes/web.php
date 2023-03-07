@@ -10,6 +10,7 @@ use App\Http\Controllers\Passenger\BookController;
 use App\Http\Controllers\Passenger\PassengerController;
 use App\Http\Controllers\Passenger\PassengerProfileController;
 use App\Http\Controllers\Passenger\RatingController;
+use App\Http\Controllers\Rider\OrderController;
 use App\Http\Controllers\Rider\RiderController;
 use App\Http\Controllers\Rider\RiderProfileController;
 use App\Http\Controllers\Rider\TripHistoryController;
@@ -81,6 +82,11 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
         Route::get('/rider/updatetrip', 'updateTrip')->name('rider.update.trip');
         // Route::get('/rider/updatetripevent/{id}', 'updateTripEvent')->name('rider.update.tripevent');
 
+    });
+
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/rider/order', 'viewOrders')->name('rider.order');
+        Route::get('/rider/order/markread', 'markRead')->name('rider.order.mark');
     });
 });
 

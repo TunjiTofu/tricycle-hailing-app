@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rider;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\User;
 use App\Models\Keke;
 use App\Models\TripHistory;
@@ -17,7 +18,8 @@ class RiderController extends Controller
         $profileData = User::find($id);
         $kekeData = Keke::firstWhere('rider_id', $id);
         $tripHistory = TripHistory::where('rider_id', $id)->where('status', 1)->first();
-        return view('rider.index', compact('profileData','kekeData','tripHistory'));
+        $orderCount = Book::where('rider_id', $id)->where('read', 0)->count();
+        return view('rider.index', compact('profileData','kekeData','tripHistory','orderCount'));
 
     }
 
