@@ -80,17 +80,17 @@ class BookController extends Controller
         $checkUser = Book::where('user_id', $request->user_id)->where('status', 1)->first();
         // dd($checkUser);
         if ($checkUser == null) {
-            $pickUp = new Point(lat: $request->pickup_lat, lng: $request->pickup_lng);
-            $destination = new Point(lat: $request->destination_lat, lng: $request->destination_lng);
             $saveBooking = Book::create([
                 'id' => Uuid::generate()->string,
                 'rider_id' => $request->rider_id,
                 'keke_id' => $request->keke_id,
                 'user_id' => $request->user_id,
-                'pick_up' => $pickUp,
-                'destination' => $destination,
+                // new Point(lat: $request->latitude, lng: $request->longitude),
+                'pick_up' => new Point(lat: $request->pickup_lat, lng: $request->pickup_lng),
+                'destination' => new Point(lat: $request->destination_lat, lng: $request->destination_lng),
                 'number_passengers' => $request->passengers,
                 'status' => 1,
+                'read' => 0,
             ]);
             if (!$saveBooking) {
                 return response()->json(['error' => 'Booking Details Not Saved']);
@@ -99,9 +99,6 @@ class BookController extends Controller
                 "text" => 'Book Ride Event Triggered', 
                 'rider_id' => $request->rider_id, 
                 'user_id' => $request->user_id, 
-                'pickup' => $pickUp, 
-                'destination' => $destination, 
-                'number_of_passengers' =>  $request->passengers
             ];
             event(new BookRide($event));
             // Log::info('Send Position Success');

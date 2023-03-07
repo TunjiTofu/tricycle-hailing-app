@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use TarfinLabs\LaravelSpatial\Casts\LocationCast;
+use TarfinLabs\LaravelSpatial\Traits\HasSpatial;
 
 class Book extends Model
 {
     use HasFactory;
     use HasUuids;
+    use HasSpatial;
 
     protected $guarded = [];
 
@@ -27,5 +29,5 @@ class Book extends Model
     public function rating()
     {
         return $this->belongsTo(Rating::class, 'id', 'book_id');
-    }
+    } 
 }
