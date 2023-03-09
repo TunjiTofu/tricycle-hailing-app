@@ -80,9 +80,8 @@
                     <form id="distance_form">
 
                         <div class="form-group"><label>Username </label>
-                            <input class="form-control" id="username" placeholder="Enter Username" />
-                            <input name="username" required="" type="hidden" />
-                        </div>
+                            <input class="form-control" id="username" placeholder="Enter Username"/>
+                            <input  name="username" required="" type="hidden"/></div>
 
                         <div class="form-group"><label>Origin: </label>
                             <input class="form-control" id="from_places" placeholder="Enter Location" />
@@ -173,61 +172,28 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-
-            <?php
-            // coordinates
-            // $latitude = '40.6781784';
-            // $longitude = '-73.9441579';
-            // $result = getAddress($latitude, $longitude);
-            // echo 'Address: ' . $result;
-            
-            // // produces output
-            // // Address: 58 Brooklyn Ave, Brooklyn, NY 11216, USA
-            
-            // function getAddress($latitude, $longitude) {
-            //     //google map api url
-            //     $url = "http://maps.google.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU;";
-            
-            //     // send http request
-            //     $geocode = file_get_contents($url);
-            //     $json = json_decode($geocode);
-            //     $address = $json->results[0]->formatted_address;
-            //     return $address;
-            // }
-            ?>
-
         </div>
     </div>
 
 
-    {{-- <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap&v=weekly"
-        defer></script> --}}
-
-
-
     <script>
-        $(function() {
+        $(function () {
             var origin, destination, map;
-//ChIJozBGOxbYOxAReslw15SU3IM
-//ChIJozBGOxbYOxAReslw15SU3IM
+    
             // add input listeners
-            // google.maps.event.addDomListener(window, 'load', function(listener) {
-            window.addEventListener('load',(evt) => {
+            google.maps.event.addDomListener(window, 'load', function (listener) {
                 setDestination();
                 initMap();
             });
-
+    
             // init or load map
             function initMap() {
+    
                 var myLatLng = {
                     lat: 6.894483189294346,
                     lng: 3.723123875349268
                 };
-                map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 16,
-                    center: myLatLng,
-                });
+                map = new google.maps.Map(document.getElementById('map'), {zoom: 16, center: myLatLng,});
 
                 //The marker, positioned at Current Location
                 marker = new google.maps.Marker({
@@ -235,110 +201,206 @@
                     map: map,
                     draggable: true,
                 });
-
-                google.maps.event.addListener(marker, 'position_changed',
-                    function() {
-                        let lat = marker.position.lat()
-                        let lng = marker.position.lng()
-                        // let name = marker.title()
-                        // console.log('Name -- ' + name);
-                        document.getElementById("destination-lat").setAttribute('value', lat)
-                        document.getElementById("destination-lng").setAttribute('value', lng)
-                        // document.getElementById("name").setAttribute('value', name)
-                    })
             }
-
-
-
+    
             function setDestination() {
-                // var from_places = new google.maps.places.Autocomplete(document.getElementById('from_places'));
-                // var from_places = new google.maps.places.Autocomplete(document.getElementById('from_places'));
-                // var to_places = new google.maps.places.Autocomplete(document.getElementById('to_places'));
-
-                // google.maps.event.addListener(from_places, 'place_changed', function() {
-                //     var from_place = from_places.getPlace();
-                //     var from_address = from_place.formatted_address;
-                //     $('#origin').val(from_address);
-                // });
-
-                // google.maps.event.addListener(to_places, 'place_changed', function() {
-                //     var to_place = to_places.getPlace();
-                //     var to_address = to_place.formatted_address;
-                //     $('#destination').val(to_address);
-                // });
-
-                console.log('Heeeeeeeeeeeeeeeeelllllllllllllllllloooooooooooooooo');
-                const geocoder = new google.maps.Geocoder();
-                var latlng = {
-                    lat: 6.8921079535158425,
-                    lng: 3.7238427073652787
-                };
-                geocoder.geocode({
-                    'location': latlng
-                }).then((response) => {
-                    if (response.results[0]) {
-                        console.log(response);
-                    }
-                })
-                // }, function(responses) {
-                //     console.log(responses);
-                //     if (responses && responses.length > 0) {
-                //         $("#origin").val(responses[1].formatted_address);
-                //         $("#from_places").val(responses[1].formatted_address);
-                //         //    console.log(responses[1].formatted_address);
-                //     } else {
-                //         alert("Cannot determine address at this location.")
-                //     }
-                // }
-                
-                // );
-
-
+                var from_places = new google.maps.places.Autocomplete(document.getElementById('from_places'));
+                var to_places = new google.maps.places.Autocomplete(document.getElementById('to_places'));
+    
+                google.maps.event.addListener(from_places, 'place_changed', function () {
+                    var from_place = from_places.getPlace();
+                    var from_address = from_place.formatted_address;
+                    $('#origin').val(from_address);
+                });
+    
+                google.maps.event.addListener(to_places, 'place_changed', function () {
+                    var to_place = to_places.getPlace();
+                    var to_address = to_place.formatted_address; 
+                    $('#destination').val(to_address);
+                });
+    
+    
             }
-        })
-        // let map;
-        // let marker;
-        // let latitude = 1.232;
-        // let longitude = 4.324;
-
-        // // Initialize and add the map
-        // function initMap() {
-
-        //     // The current location
-        //     const currentLocation = {
-        //         lat: +latitude,
-        //         lng: +longitude
-        //     };
-        //     // console.log(currentLocation);
-
-        //     // The map, centered at Current Location
-        //     map = new google.maps.Map(document.getElementById("map"), {
-        //         zoom: 17,
-        //         center: currentLocation,
-        //         scrollwheel: true,
-        //     });
-
-        //     // The marker, positioned at Current Location
-        //     marker = new google.maps.Marker({
-        //         position: currentLocation,
-        //         map: map,
-        //         draggable: true,
-        //     });
-
-        //     google.maps.event.addListener(marker, 'position_changed',
-        //         function() {
-        //             let lat = marker.position.lat()
-        //             let lng = marker.position.lng()
-        //             // let name = marker.title()
-        //             // console.log('Name -- ' + name);
-        //             document.getElementById("destination-lat").setAttribute('value', lat)
-        //             document.getElementById("destination-lng").setAttribute('value', lng)
-        //             // document.getElementById("name").setAttribute('value', name)
-        //         })
-        // }
+    
+            function displayRoute(travel_mode, origin, destination, directionsService, directionsDisplay) {
+                directionsService.route({
+                    origin: origin,
+                    destination: destination,
+                    travelMode: travel_mode,
+                    avoidTolls: true
+                }, function (response, status) {
+                    if (status === 'OK') {
+                        directionsDisplay.setMap(map);
+                        directionsDisplay.setDirections(response);
+                    } else {
+                        directionsDisplay.setMap(null);
+                        directionsDisplay.setDirections(null);
+                        alert('Could not display directions due to: ' + status);
+                    }
+                });
+            }
+    
+            // calculate distance , after finish send result to callback function
+            function calculateDistance(travel_mode, origin, destination) {
+    
+                var DistanceMatrixService = new google.maps.DistanceMatrixService();
+                DistanceMatrixService.getDistanceMatrix(
+                    {
+                        origins: [origin],
+                        destinations: [destination],
+                        travelMode: google.maps.TravelMode[travel_mode],
+                        unitSystem: google.maps.UnitSystem.IMPERIAL, // miles and feet.
+                        // unitSystem: google.maps.UnitSystem.metric, // kilometers and meters.
+                        avoidHighways: false,
+                        avoidTolls: false
+                    }, save_results);
+            }
+    
+            // save distance results
+            function save_results(response, status) {
+    
+                if (status != google.maps.DistanceMatrixStatus.OK) {
+                    $('#result').html(err);
+                } else {
+                    var origin = response.originAddresses[0];
+                    var destination = response.destinationAddresses[0];
+                    if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
+                        $('#result').html("Sorry , not available to use this travel mode between " + origin + " and " + destination);
+                    } else {
+                        var distance = response.rows[0].elements[0].distance;
+                        var duration = response.rows[0].elements[0].duration;
+                        var distance_in_kilo = distance.value / 1000; // the kilo meter
+                        var distance_in_mile = distance.value / 1609.34; // the mile
+                        var duration_text = duration.text;
+                        appendResults(distance_in_kilo, distance_in_mile, duration_text);
+                        sendAjaxRequest(origin, destination, distance_in_kilo, distance_in_mile, duration_text);
+                    }
+                }
+            }
+    
+            // append html results
+            function appendResults(distance_in_kilo, distance_in_mile, duration_text) {
+                $("#result").removeClass("hide");
+                $('#in_mile').html("Distance in Mile : <span class='badge badge-pill badge-secondary'>" + distance_in_mile.toFixed(2) + "</span>");
+                $('#in_kilo').html("Distance in Kilo : <span class='badge badge-pill badge-secondary'>" + distance_in_kilo.toFixed(2) + "</span>");
+                $('#duration_text').html("In Text: <span class='badge badge-pill badge-success'>" + duration_text + "</span>");
+            }
+    
+            // send ajax request to save results in the database
+            function sendAjaxRequest(origin, destination, distance_in_kilo, distance_in_mile, duration_text) {
+                var username =   $('#username').val();
+                var travel_mode =  $('#travel_mode').find(':selected').text();
+                $.ajax({
+                    url: 'common.php',
+                    type: 'POST',
+                    data: {
+                        username,
+                        travel_mode,
+                        origin,
+                        destination,
+                        distance_in_kilo,
+                        distance_in_mile,
+                        duration_text
+                    },
+                    success: function (response) {
+                        console.info(response);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            }
+    
+            // on submit  display route ,append results and send calculateDistance to ajax request
+            $('#distance_form').submit(function (e) {
+                e.preventDefault();
+                var origin = $('#origin').val();
+                var destination = $('#destination').val();
+                var travel_mode = $('#travel_mode').val();
+                var directionsDisplay = new google.maps.DirectionsRenderer({'draggable': false});
+                var directionsService = new google.maps.DirectionsService();
+               displayRoute(travel_mode, origin, destination, directionsService, directionsDisplay);
+                calculateDistance(travel_mode, origin, destination);
+            });
+    
+        });
+    
+        // get current Position
+        function getCurrentPosition() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(setCurrentPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.")
+            }
+        }
+    
+        // get formatted address based on current position and set it to input
+        function setCurrentPosition(pos) {
+            var geocoder = new google.maps.Geocoder();
+            var latlng = {lat: parseFloat(pos.coords.latitude), lng: parseFloat(pos.coords.longitude)};
+            geocoder.geocode({ 'location' :latlng  }, function (responses) {
+                console.log(responses);
+                if (responses && responses.length > 0) {
+                    $("#origin").val(responses[1].formatted_address);
+                    $("#from_places").val(responses[1].formatted_address);
+                    //    console.log(responses[1].formatted_address);
+                } else {
+                    alert("Cannot determine address at this location.")
+                }
+            });
+        }
+    
+    
     </script>
 
-    {{-- 
+
+    {{-- <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap&v=weekly"
+        defer></script>
+
+    <script>
+        let map;
+        let marker;
+        let latitude = 1.232;
+        let longitude = 4.324;
+
+        // Initialize and add the map
+        function initMap() {
+
+            // The current location
+            const currentLocation = {
+                lat: +latitude,
+                lng: +longitude
+            };
+            // console.log(currentLocation);
+
+            // The map, centered at Current Location
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 17,
+                center: currentLocation,
+                scrollwheel: true,
+            });
+
+            // The marker, positioned at Current Location
+            marker = new google.maps.Marker({
+                position: currentLocation,
+                map: map,
+                draggable: true,
+            });
+
+            google.maps.event.addListener(marker, 'position_changed',
+                function() {
+                    let lat = marker.position.lat()
+                    let lng = marker.position.lng()
+                    // let name = marker.title()
+                    // console.log('Name -- ' + name);
+                    document.getElementById("destination-lat").setAttribute('value', lat)
+                    document.getElementById("destination-lng").setAttribute('value', lng)
+                    // document.getElementById("name").setAttribute('value', name)
+                })
+        }
+    </script>
+
     <script>
         $(function() {
 
