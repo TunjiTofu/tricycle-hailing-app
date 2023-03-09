@@ -86,7 +86,8 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
 
     Route::controller(OrderController::class)->group(function () {
         Route::get('/rider/order', 'viewOrders')->name('rider.order');
-        Route::get('/rider/order/markread', 'markRead')->name('rider.order.mark');
+        Route::get('/rider/read/{id}', 'readOrder')->name('rider.read');
+        Route::get('/mine/help', 'helpMe')->name('help.mee');
     });
 });
 
@@ -110,6 +111,7 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::controller(BookController::class)->group(function () {
         Route::get('/passenger/book', 'index')->name('passenger.book');
         Route::post('/passenger/book/select', 'selectRide')->name('passenger.book.select');
+        Route::get('/passenger/book/select2', 'selectRide2')->name('passenger.book.select2');
         Route::post('/passenger/book/trip', 'storeBookingDetails')->name('passenger.book.trip');
         Route::get('/passenger/book/details', 'storeBookDetailsSession')->name('book.trip.session');
         Route::get('/passenger/book/endtrip', 'endTrip')->name('passenger.end');

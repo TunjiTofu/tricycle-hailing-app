@@ -70,6 +70,45 @@ class BookController extends Controller
         return view('passenger.book.details', compact('numberOfBookings', 'spaceAvailable', 'keke_id', 'rider', 'profileData'));
     }
 
+
+    public function selectRide2()
+    {
+        $kekeSpace = 3;
+        $spaceAvailable = 0;
+        $numberOfPassengers = 0;
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        $keke_id = 'Keke-2638';
+        $rider = Keke::where('plate_no', $keke_id)->first();
+        // $rider_id = $rider->rider_id;
+        // $request->validate([
+        //     'keke_id' => 'required|string|max:9|regex:/Keke-\d\d\d\d/',
+        // ]);
+        $numberOfBookings = Book::where('keke_id', $keke_id)->where('status', 1)->get();
+        $count = count($numberOfBookings);
+        // dd($count);
+        if ($count > 0) {
+            foreach ($numberOfBookings as $bookings) {
+                // dd($bookings->number_passengers);
+                $numberOfPassengers += $bookings->number_passengers;
+            }
+            $spaceAvailable = $kekeSpace - $numberOfPassengers;
+            // dd($spaceAvailable);
+        } else {
+            $spaceAvailable = $kekeSpace;
+        }
+        // dd($spaceAvailable);
+        if ($spaceAvailable == 0) {
+            $notification = array(
+                'message' => 'This Keke is full. Kindly order for another Keke closest to you. Thanks.',
+                'alert-type' => 'info'
+            );
+            return redirect()->back()->with($notification);
+        }
+        return view('passenger.book.details_calculation', compact('numberOfBookings', 'spaceAvailable', 'keke_id', 'rider', 'profileData'));
+    }
+
+
     public function storeBookingDetails(Request $request)
     {
         dd($request);
