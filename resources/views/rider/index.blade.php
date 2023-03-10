@@ -1,6 +1,6 @@
 @extends('rider.dashboard')
 @section('rider')
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js']);
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <div class="page-content">
@@ -444,16 +444,22 @@
             Echo.channel('tricycleApp')
                 .listen('SendPosition', (e) => {
                     console.log(e);
-                    updateTripDB(e.msg.text)
+                    updateTripDB(e.msg)
                 });
-        }
 
-        window.onload = function() {
             Echo.channel('tricycleApp')
                 .listen('BookRide', (e) => {
                     console.log(e);
                     notifyRider(e)
                 });
         }
+
+        // window.onload = function() {
+        //     Echo.channel('tricycleApp')
+        //         .listen('BookRide', (e) => {
+        //             console.log(e);
+        //             notifyRider(e)
+        //         });
+        // }
     </script>
 @endsection

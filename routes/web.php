@@ -125,7 +125,8 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     });
 
     Route::controller(PassengerOrderController::class)->group(function () {
-        Route::get('/rider/order', 'viewAllOrders')->name('passenger.order');
+        Route::get('/passenger/order', 'viewAllOrders')->name('passenger.order');
+        Route::get('/passenger/rider/{keke}', 'viewRiderLocation')->name('passenger.view.rider');
     });
 });
 
