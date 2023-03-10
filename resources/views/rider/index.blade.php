@@ -110,7 +110,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <a href="{{ route('rider.order') }}">
+                            <a href="{{ route('rider.pending.order') }}">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <p class="text-truncate font-size-14 mb-2">Orders</p>

@@ -9,11 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function viewOrders()
+    public function viewPendingOrders()
     {
         $id = Auth::user()->id;
-        $allOrders = Book::where('rider_id', $id)->where('read', 0)->orderBy('created_at', 'desc')->get();
-        return view('rider.order.index', compact('allOrders'));
+        $allOrders = Book::where('rider_id', $id)->where('read', 0)->where('status', 1)->orderBy('created_at', 'desc')->get();
+        $orderCount = Book::where('rider_id', $id)->where('read', 0)->where('status', 1)->count();
+        return view('rider.order.index', compact('allOrders','orderCount'));
+    }
+
+    public function viewAllOrders()
+    {
+        $id = Auth::user()->id;
+        $allOrders = Book::where('rider_id', $id)->orderBy('created_at', 'desc')->get();
+        $orderCount = Book::where('rider_id', $id)->where('read', 0)->where('status', 1)->count();
+        return view('rider.order.history', compact('allOrders','orderCount'));
     }
 
     public function readOrder($id)

@@ -18,7 +18,7 @@ class RiderController extends Controller
         $profileData = User::find($id);
         $kekeData = Keke::firstWhere('rider_id', $id);
         $tripHistory = TripHistory::where('rider_id', $id)->where('status', 1)->first();
-        $orderCount = Book::where('rider_id', $id)->where('read', 0)->count();
+        $orderCount = Book::where('rider_id', $id)->where('read', 0)->where('status', 1)->count();
         return view('rider.index', compact('profileData','kekeData','tripHistory','orderCount'));
 
     }

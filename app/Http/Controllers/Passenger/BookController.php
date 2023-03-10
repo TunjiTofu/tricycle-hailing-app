@@ -116,6 +116,7 @@ class BookController extends Controller
 
     public function storeBookDetailsSession(Request $request)
     {
+        // dd($request);
         $checkUser = Book::where('user_id', $request->user_id)->where('status', 1)->first();
         // dd($checkUser);
         if ($checkUser == null) {
@@ -128,6 +129,9 @@ class BookController extends Controller
                 'pick_up' => new Point(lat: $request->pickup_lat, lng: $request->pickup_lng),
                 'destination' => new Point(lat: $request->destination_lat, lng: $request->destination_lng),
                 'number_passengers' => $request->passengers,
+                'distance' => $request->distance_in_kilo,
+                'duration' => $request->duration_text,
+                'amount' => $request->amount_payable,
                 'status' => 1,
                 'read' => 0,
             ]);
@@ -135,9 +139,9 @@ class BookController extends Controller
                 return response()->json(['error' => 'Booking Details Not Saved']);
             }
             $event = [
-                "text" => 'Book Ride Event Triggered', 
-                'rider_id' => $request->rider_id, 
-                'user_id' => $request->user_id, 
+                "text" => 'Book Ride Event Triggered',
+                'rider_id' => $request->rider_id,
+                'user_id' => $request->user_id,
             ];
             event(new BookRide($event));
             // Log::info('Send Position Success');

@@ -21,6 +21,9 @@ return new class extends Migration
             $table->point('pick_up');
             $table->point('destination');
             $table->integer('number_passengers');
+            $table->string('distance');
+            $table->string('duration');
+            $table->integer('amount');
             $table->integer('status');
             $table->integer('read');
             $table->timestamps();
