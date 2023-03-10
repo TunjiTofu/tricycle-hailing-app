@@ -8,6 +8,7 @@ use App\Models\TripHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Webpatser\Uuid\Uuid;
 use TarfinLabs\LaravelSpatial\Types\Point;
@@ -51,15 +52,16 @@ class TripHistoryController extends Controller
 
     public function updateTrip(Request $request)
     {
+        $id = Auth::user()->id;
         $location = new Point(lat: $request->latitude, lng: $request->longitude);
         // dd($request);
         // $tripHistory = TripHistory::where('rider_id', $request->rider_id)->where('status', 1)->first();
-        $tripHistory = TripHistory::where('status', 1)->where('end_location', null)->get();
+        $tripHistory = TripHistory::where('rider_id', $id)->where('status', 1)->where('end_location', null)->get();
         // ->update([
         //     "update_trip_time" => Carbon::now(), 
         //     "current_location" => new Point(lat: $request->latitude, lng: $request->longitude)
         // ]);
-        // dd($tripHistory);
+        // dd($tripHistory); 
         // $tripHistory->status = 0;
         if (!$tripHistory) {
             return response()->json(['success' => 'There is no Ongoing Trips']);

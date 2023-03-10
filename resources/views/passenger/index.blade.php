@@ -25,6 +25,18 @@
             <!-- end page title -->
 
             <div class="row">
+                <div class="col-sm-12">
+                    @if ($approvedTrip)
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="mdi mdi-check-all me-2"></i>
+                            <a href="{{ route('passenger.view.rider', ['keke'=>$approvedTrip->keke_id] ) }}" style="color: inherit">Your Trip Has Been Viewed By the Rider. Click to
+                                View the Rider's Current Location</a>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -45,6 +57,27 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    @if ($approvedTrip)
+                                        <a href="{{ route('passenger.view.rider', ['keke'=>$approvedTrip->keke_id] ) }}" class="btn btn-danger btn-lg"
+                                            style="width: 100%; height: 100%;">View Rider's Location</a>
+                                    @else
+                                    <a href="#" class="btn btn-danger btn-lg" role="link" aria-disabled="true"
+                                    style="width: 100%; height: 100%;">View Rider's Location</a>
+                                    @endif
+
+                                </div>
+                                <div class="avatar-md">
+                                </div>
+                            </div>
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
+
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -240,15 +273,16 @@
                                                 {{-- Rating: {{ $history->rating->rating }} --}}
                                             </td>
                                             <td>
-                                                
+
                                                 @if (isset($history->rating->rating))
                                                     <input type="hidden" class="rating"
                                                         data-filled="mdi mdi-star text-primary"
                                                         data-empty="mdi mdi-star-outline text-primary" data-fractions="2"
                                                         value="{{ $history->rating->rating }}" data-readonly />
                                                 @else
-                                                <input type="text" id="rider-id" value="{{ $history->rider_id }}">
-                                                <input type="text" id="book-id" value="{{ $history->id }}">
+                                                    <input type="text" id="rider-id"
+                                                        value="{{ $history->rider_id }}">
+                                                    <input type="text" id="book-id" value="{{ $history->id }}">
                                                     <div class="rating-star">
                                                         <input type="hidden" id="rider-rating" class="rating"
                                                             data-id="{{ $history->rider_id }}"
@@ -272,7 +306,7 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
             </div><!-- end row -->
- 
+
             {{-- Ajax Loader Spinner --}}
             <div class="bground" style="display: none">
                 <div class="spinner">
@@ -332,9 +366,9 @@
                         complete: function() {
                             $('.bground').hide();
                             setTimeout(() => {
-                                        window.location =
-                                            '{{ route('passenger.dashboard') }}'
-                                    }, 3000);
+                                window.location =
+                                    '{{ route('passenger.dashboard') }}'
+                            }, 3000);
                         }
 
                     });
@@ -469,7 +503,7 @@
 
 
         function notifyRider(msg) {
-            console.log('Book Ride Msg - '+ msg);
+            console.log('Book Ride Msg - ' + msg);
         }
         // function updateTripDB(msg) {
         //     console.log('Message - ' + msg);

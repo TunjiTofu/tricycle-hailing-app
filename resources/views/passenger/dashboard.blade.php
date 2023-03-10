@@ -277,7 +277,12 @@
             dropdownParent: $('.modal')
         });
     </script>
+    
+      <!-- Bootstrap rating js -->
+      <script src="{{ asset('backend/assets/libs/bootstrap-rating/bootstrap-rating.min.js') }}"></script>
 
+      <script src="{{ asset('backend/assets/js/pages/rating-init.js') }}"></script>
+      
     <!-- Sweet Alert -->
     {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
@@ -290,10 +295,7 @@
     <!-- Sweet alert init js-->
     <script src="{{ asset('backend/assets/js/pages/sweet-alerts.init.js') }}"></script> --}}
 
-     <!-- Bootstrap rating js -->
-     <script src="{{ asset('backend/assets/libs/bootstrap-rating/bootstrap-rating.min.js') }}"></script>
-
-     <script src="{{ asset('backend/assets/js/pages/rating-init.js') }}"></script>
+   
 
 </body>
 

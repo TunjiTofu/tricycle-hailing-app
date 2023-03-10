@@ -392,10 +392,10 @@
                                         },
                                         complete: function() {
                                             $('.bground').hide();
-                                            // setTimeout(() => {
-                                            //     window.location =
-                                            //         '{{ route('passenger.dashboard') }}'
-                                            // }, 5000);
+                                            setTimeout(() => {
+                                                window.location =
+                                                    '{{ route('passenger.dashboard') }}'
+                                            }, 5000);
                                         }
                                     });
 
