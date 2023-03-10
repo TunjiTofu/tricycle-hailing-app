@@ -8,7 +8,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h3>Pending Orders</h3>
+                            <h3>Order History</h3>
                             <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
@@ -17,7 +17,6 @@
                                         <th>Passenger</th>
                                         <th>Location</th>
                                         <th>Date</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -32,9 +31,11 @@
                                                 ({{ $order->customer->username }})
                                             </td>
                                             <td>
-                                                Pick Up Point: {{ $order->pick_up->getLat() }}, {{ $order->pick_up->getLng() }}
+                                                Pick Up Point: {{ $order->pick_up->getLat() }},
+                                                {{ $order->pick_up->getLng() }}
                                                 <br>
-                                                Destination: {{ $order->destination->getLat() }}, {{ $order->destination->getLng() }}
+                                                Destination: {{ $order->destination->getLat() }},
+                                                {{ $order->destination->getLng() }}
                                                 <br>
                                                 Distance in Km: {{ $order->distance }}
                                                 <br>
@@ -42,7 +43,7 @@
                                                 <br>
                                                 Amount Payable: ₦{{ $order->amount }}
                                                 <br>
-                                                
+
                                                 <button class="btn btn-info btn-sm show-map" data-bs-toggle="modal"
                                                     data-bs-target="#myModalPickUp" data-id="{{ $i }}"
                                                     data-picklat="{{ $order->pick_up->getLat() }}"
@@ -58,7 +59,7 @@
                                                 </div> --}}
 
                                                 <p></p>
-                                               
+
                                                 {{-- {{ $order->destination->getLng() }} <button
                                                     class="btn btn-secondary btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#myModalDestination">View on
@@ -67,13 +68,6 @@
                                             </td>
                                             <td>
                                                 {{ Carbon\Carbon::parse($order->created_at)->diffForHumans() }}
-                                            </td>
-                                            <td>
-                                                {{-- <input type="text" value="3" id="dept"> --}}
-                                                <a href="{{ route('rider.read', ['id' => $order->id]) }}"
-                                                    class="btn btn-info btn-sm">Mark as Read</a>
-                                                {{-- <button class="btn btn-info w-100 waves-effect waves-light mark"
-                                                    type="submit">Book Ride</button> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -313,7 +307,7 @@
                                 console.log('Mile ' + distance_in_mile);
                                 console.log(duration_text);
                                 document.getElementById("kilo").setAttribute('value',
-                                    distance_in_kilo+' Km')
+                                    distance_in_kilo + ' Km')
                                 document.getElementById("duration").setAttribute('value',
                                     duration_text)
                             }

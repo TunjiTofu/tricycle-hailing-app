@@ -5,11 +5,13 @@
         <!-- User details -->
         <div class="user-profile text-center mt-3">
             <div class="">
-                <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" alt="" class="avatar-md rounded-circle">
+                <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" alt=""
+                    class="avatar-md rounded-circle">
             </div>
             <div class="mt-3">
                 <h4 class="font-size-16 mb-1">Julia Huddaaaa</h4>
-                <span class="text-muted"><i class="ri-record-circle-line align-middle font-size-14 text-success"></i> Online</span>
+                <span class="text-muted"><i class="ri-record-circle-line align-middle font-size-14 text-success"></i>
+                    Online</span>
             </div>
         </div>
 
@@ -20,8 +22,8 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="index.html" class="waves-effect">
-                        <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                    <a href="{{ route('rider.dashboard') }}" class="waves-effect">
+                        <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">{{ $orderCount }}</span>
                         <span>Dashboard</span>
                     </a>
                 </li>
@@ -32,15 +34,15 @@
                         <span>Calendar</span>
                     </a>
                 </li>
-    
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
-                        <span>Keke Management</span>
+                        <span>Orders</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('keke.index') }}">View All Keke</a></li>
-                        {{-- <li><a href="email-read.html">Add New Keke</a></li> --}}
+                        <li><a href="{{ route('rider.pending.order') }}">Pending Orders</a></li>
+                        <li><a href="{{ route('rider.history.order') }}">Order History</a></li>
                     </ul>
                 </li>
                 <li>
@@ -139,7 +141,7 @@
                         <li><a href="ui-typography.html">Typography</a></li>
                         <li><a href="ui-video.html">Video</a></li>
                         <li><a href="ui-general.html">General</a></li>
-            
+
                     </ul>
                 </li>
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PlaceController;
 use App\Http\Controllers\Passenger\BookController;
 use App\Http\Controllers\Passenger\PassengerController;
+use App\Http\Controllers\Passenger\PassengerOrderController;
 use App\Http\Controllers\Passenger\PassengerProfileController;
 use App\Http\Controllers\Passenger\RatingController;
 use App\Http\Controllers\Rider\OrderController;
@@ -85,7 +86,8 @@ Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
     });
 
     Route::controller(OrderController::class)->group(function () {
-        Route::get('/rider/order', 'viewOrders')->name('rider.order');
+        Route::get('/rider/order/all', 'viewAllOrders')->name('rider.history.order');
+        Route::get('/rider/order/pending', 'viewPendingOrders')->name('rider.pending.order');
         Route::get('/rider/read/{id}', 'readOrder')->name('rider.read');
         Route::get('/mine/help', 'helpMe')->name('help.mee');
     });
@@ -120,6 +122,10 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
 
     Route::controller(RatingController::class)->group(function () {
         Route::get('/passenger/trip/rate', 'rateTrip')->name('passenger.trip.rate');
+    });
+
+    Route::controller(PassengerOrderController::class)->group(function () {
+        Route::get('/rider/order', 'viewAllOrders')->name('passenger.order');
     });
 });
 

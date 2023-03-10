@@ -1,5 +1,5 @@
-@extends('rider.dashboard')
-@section('rider')
+@extends('passenger.dashboard')
+@section('passenger')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
     <div class="page-content">
@@ -14,10 +14,9 @@
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>Passenger</th>
+                                        <th>Rider</th>
                                         <th>Location</th>
                                         <th>Date</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -28,8 +27,8 @@
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>
-                                                {{ $order->customer->surname }}, {{ $order->customer->other_name }} <br>
-                                                ({{ $order->customer->username }})
+                                                {{ $order->user->surname }}, {{ $order->user->other_name }} <br>
+                                                ({{ $order->user->username }})
                                             </td>
                                             <td>
                                                 Pick Up Point: {{ $order->pick_up->getLat() }}, {{ $order->pick_up->getLng() }}
@@ -67,13 +66,6 @@
                                             </td>
                                             <td>
                                                 {{ Carbon\Carbon::parse($order->created_at)->diffForHumans() }}
-                                            </td>
-                                            <td>
-                                                {{-- <input type="text" value="3" id="dept"> --}}
-                                                <a href="{{ route('rider.read', ['id' => $order->id]) }}"
-                                                    class="btn btn-info btn-sm">Mark as Read</a>
-                                                {{-- <button class="btn btn-info w-100 waves-effect waves-light mark"
-                                                    type="submit">Book Ride</button> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -125,13 +117,9 @@
     <script defer
         src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap">
     </script>
-    <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js"></script>
 
     <script>
         $(function() {
-
-
-
             $('.show-map').click(function() {
                 window.addEventListener('click', (listener) => {
                     initMap();
