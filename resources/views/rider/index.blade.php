@@ -1,6 +1,5 @@
 @extends('rider.dashboard')
 @section('rider')
-    @vite(['resources/js/app.js']);
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <div class="page-content">
@@ -12,17 +11,29 @@
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">Dashboard</h4>
 
-                        <div class="page-title-right">
+                        {{-- <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ol>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="rating-star">
+                        Rating 
+                        <input type="hidden" id="rider-rating" class="rating" data-filled="mdi mdi-star text-primary"
+                            data-empty="mdi mdi-star-outline text-primary" data-fractions="2"
+                            value="{{ $totalRatingApprox }}" data-readonly />
+                    </div>
+                </div>
+            </div>
             <!-- end page title -->
+
+            {{-- {{ dd($ratings)}} --}}
 
             <div class="row">
                 <div class="col-xl-3 col-md-6">
@@ -128,7 +139,7 @@
                 </div><!-- end col -->
             </div>
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -209,7 +220,7 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
-            </div><!-- end row -->
+            </div><!-- end row --> --}}
 
             {{-- Ajax Loader Spinner --}}
             <div class="bground" style="display: none">
@@ -359,60 +370,7 @@
             })
         })
 
-        function updateTripDB(msg) {
-            console.log('Message - ' + msg);
-
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-
-                    latt = position.coords.latitude;
-                    lngg = position.coords.longitude;
-
-                    console.log('Browser Detected');
-                    console.log('Lat - ' + latt);
-                    console.log('Lng - ' + lngg);
-
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        url: '{{ route('rider.update.trip') }}',
-                        data: {
-                            'latitude': latt,
-                            'longitude': lngg,
-                        },
-                        success: function(data) {
-                            console.log(data.success);
-                        },
-                        error: function(data) {
-                            console.log(data.success);
-                        }
-                    });
-
-
-                }
-            );
-
-
-        }
-
-        function notifyRider(e) {
-            var orderNotification = +document.getElementById("notification").textContent;
-            var newOrder = 0;
-            console.log('Order Notification ' + orderNotification);
-            console.log('New Order ' + newOrder);
-            console.log(e.msg.rider_id);
-            var rider_id = "{{ $profileData->id }}";
-            if (e.msg.rider_id == rider_id) {
-                console.log(e);
-                console.log(rider_id);
-                newOrder = orderNotification + 1;
-                $('#notification').text(newOrder);
-                toastr.options.closeButton = true;
-                toastr.options.closeMethod = 'fadeOut';
-                toastr.options.closeDuration = 5000;
-                toastr.info('A New Order Has Been Made');
-            }
-        }
+        
     </script>
     <script>
         $(function() {
@@ -439,27 +397,5 @@
         })
     </script>
 
-    <script>
-        window.onload = function() {
-            Echo.channel('tricycleApp')
-                .listen('SendPosition', (e) => {
-                    console.log(e);
-                    updateTripDB(e.msg)
-                });
-
-            Echo.channel('tricycleApp')
-                .listen('BookRide', (e) => {
-                    console.log(e);
-                    notifyRider(e)
-                });
-        }
-
-        // window.onload = function() {
-        //     Echo.channel('tricycleApp')
-        //         .listen('BookRide', (e) => {
-        //             console.log(e);
-        //             notifyRider(e)
-        //         });
-        // }
-    </script>
+   
 @endsection

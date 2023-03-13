@@ -27,14 +27,14 @@
             </button>
 
             <!-- App Search-->
-            <form class="app-search d-none d-lg-block">
+            {{-- <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
                     <input type="text" class="form-control" placeholder="Search...">
                     <span class="ri-search-line"></span>
                 </div>
-            </form>
+            </form> --}}
 
-            <div class="dropdown dropdown-mega d-none d-lg-block ms-2">
+            {{-- <div class="dropdown dropdown-mega d-none d-lg-block ms-2">
                 <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                     Mega Menu
                     <i class="mdi mdi-chevron-down"></i> 
@@ -163,12 +163,12 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <div class="d-flex">
 
-            <div class="dropdown d-inline-block d-lg-none ms-2">
+            {{-- <div class="dropdown d-inline-block d-lg-none ms-2">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="ri-search-line"></i>
@@ -187,9 +187,9 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="dropdown d-none d-sm-inline-block">
+            {{-- <div class="dropdown d-none d-sm-inline-block">
                 <button type="button" class="btn header-item waves-effect"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="" src="assets/images/flags/us.jpg" alt="Header Language" height="16">
@@ -216,9 +216,9 @@
                         <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                     </a>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="dropdown d-none d-lg-inline-block ms-1">
+            {{-- <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="ri-apps-2-line"></i>
@@ -268,7 +268,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -276,7 +276,7 @@
                 </button>
             </div>
 
-            <div class="dropdown d-inline-block">
+            {{-- <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
                       data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ri-notification-3-line"></i>
@@ -363,12 +363,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="dropdown d-inline-block user-dropdown">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}"
+                    <img class="rounded-circle header-profile-user" src="{{asset($profileData->picture) }}"
                         alt="Header Avatar">
                     <span class="d-none d-xl-inline-block ms-1">{{ $profileData->username }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
@@ -377,18 +377,18 @@
                     <!-- item-->
                     <a class="dropdown-item" href="{{ route('passenger.profile') }}"><i class="ri-user-line align-middle me-1"></i> Profile</a>
                     <a class="dropdown-item" href="{{ route('passenger.password-change') }}"><i class="ri-wallet-2-line align-middle me-1"></i> Change Psssword</a>
-                    <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a>
-                    <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock screen</a>
+                    {{-- <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a> --}}
+                    {{-- <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock screen</a> --}}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('passenger.logout') }}"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
                 </div>
             </div>
-
+{{-- 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                     <i class="ri-settings-2-line"></i>
                 </button>
-            </div>
+            </div> --}}
 
         </div>
     </div>

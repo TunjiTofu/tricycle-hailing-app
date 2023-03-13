@@ -78,87 +78,11 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
 
-                <div class="col-xl-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                {{-- <div class="flex-grow-1">
-                                    <p class="text-truncate font-size-14 mb-2">Current Status</p>
-                                    <h4 class="mb-2" id="statusText">{{ ucfirst($profileData->status) }}</h4>
-                                </div>
-                                <div class="avatar-md">
-                                    <span>
-                                        <input data-id="{{ $profileData->id }}" type="checkbox" id="switch1"
-                                            class="toggle-class" switch="none"
-                                            {{ $profileData->status == 'active' ? 'checked' : '' }} />
-                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label>
-                                    </span>
-                                </div> --}}
-                            </div>
-                        </div><!-- end cardbody -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-                <div class="col-xl-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="flex-grow-1">
-                                    <?php
-                                    // if(($tripHistory != null)&& ($tripHistory->status == 1)){
-                                    ?>
-                                    {{-- <button type="button" id="stopText" data-id="{{ $profileData->id }}"
-                                        data-keke="{{ $kekeData->plate_no }}"
-                                        class="stop-trip btn btn-success btn-lg waves-effect waves-light"
-                                        style="width: 100%; height: 100%; background-color: red"><i
-                                            class="ri-check-line align-middle me-2"></i>Stop Trip</button>
-
-                                    <button type="button" id="startText" data-id="{{ $profileData->id }}"
-                                        data-keke="{{ $kekeData->plate_no }}"
-                                        class="start-trip btn btn-success btn-lg waves-effect waves-light"
-                                        style="width: 100%; height: 100%; display: none"><i
-                                            class="ri-check-line align-middle me-2"></i>Start Trip</button> --}}
-                                    <?php
-                                    //  }else {
-                                    ?>
-                                    {{-- <button type="button" id="startText" data-id="{{ $profileData->id }}"
-                                        data-keke="{{ $kekeData->plate_no }}"
-                                        class="start-trip btn btn-success btn-lg waves-effect waves-light"
-                                        style="width: 100%; height: 100%;"><i
-                                            class="ri-check-line align-middle me-2"></i>Start Trip</button>
-
-                                    <button type="button" id="stopText" data-id="{{ $profileData->id }}"
-                                        data-keke="{{ $kekeData->plate_no }}"
-                                        class="stop-trip btn btn-success btn-lg waves-effect waves-light"
-                                        style="width: 100%; height: 100%; background-color: red; display: none"><i
-                                            class="ri-check-line align-middle me-2"></i>Stop Trip</button> --}}
-                                    <?php
-                                    
-                                    //  }
-                                    ?>
-
-                                </div>
-                                <div class="avatar-md">
-                                    <span>
-                                        <label id="tripText"></label>
-                                        {{-- <input data-id="{{ $profileData->id }}" type="checkbox" id="switch1"
-                                            class="toggle-class" switch="none"
-                                            {{ $profileData->status == 'active' ? 'checked' : '' }} />
-                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label> --}}
-                                    </span>
-                                </div>
-                            </div>
-                        </div><!-- end cardbody -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
+               
+               
             </div>
 
             {{-- <div class="row">
-                <div class="col-xl-12">
-                    <div id="map" style="width: auto; height: 500px; border:1px solid red"></div>
-                </div>
-            </div> --}}
-
-            <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -239,7 +163,7 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
-            </div><!-- end row -->
+            </div><!-- end row --> --}}
 
             <div class="row">
                 <div class="col-12">
@@ -280,9 +204,9 @@
                                                         data-empty="mdi mdi-star-outline text-primary" data-fractions="2"
                                                         value="{{ $history->rating->rating }}" data-readonly />
                                                 @else
-                                                    <input type="text" id="rider-id"
+                                                    <input type="hidden" id="rider-id"
                                                         value="{{ $history->rider_id }}">
-                                                    <input type="text" id="book-id" value="{{ $history->id }}">
+                                                    <input type="hidden" id="book-id" value="{{ $history->id }}">
                                                     <div class="rating-star">
                                                         <input type="hidden" id="rider-rating" class="rating"
                                                             data-id="{{ $history->rider_id }}"
