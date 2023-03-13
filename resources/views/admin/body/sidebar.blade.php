@@ -40,6 +40,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('keke.index') }}">View All Keke</a></li>
+                        <li><a href="{{ route('keke.transit') }}">Keke in Transit</a></li>
                         {{-- <li><a href="email-read.html">Add New Keke</a></li> --}}
                     </ul>
                 </li>

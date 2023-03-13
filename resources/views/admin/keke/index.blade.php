@@ -43,14 +43,17 @@
                                                 </div>
                                             </td>
                                             <td>{{ ucfirst($keke->user->username) }}</td>
-                                            <td><b>Created:</b> {{ Carbon\Carbon::parse($keke->created_at)->toDayDateTimeString() }} <br>
-                                                <b>Last Updated:</b> {{ Carbon\Carbon::parse($keke->updated_at)->diffForHumans() }}
+                                            <td><b>Created:</b>
+                                                {{ Carbon\Carbon::parse($keke->created_at)->toDayDateTimeString() }} <br>
+                                                <b>Last Updated:</b>
+                                                {{ Carbon\Carbon::parse($keke->updated_at)->diffForHumans() }}
                                             </td>
                                             <td>
+                                                
                                                 <form method="post" action="{{ route('keke.destroy', $keke->id) }}">
                                                     @method('delete')
                                                     @csrf
-
+                                                    
                                                     <a href="{{ route('keke.edit', $keke->id) }}"
                                                         class="btn btn-secondary sm" title="Edit Record"><i
                                                             class="fas fa-edit"></i> </a>
