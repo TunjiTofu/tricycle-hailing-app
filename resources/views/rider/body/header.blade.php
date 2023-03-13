@@ -281,6 +281,7 @@
                       data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ri-notification-3-line"></i>
                     <span class="noti-dot"></span>
+                    <span class="badge rounded-pill bg-danger float-end" id="notification">{{ $orderCount }}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">

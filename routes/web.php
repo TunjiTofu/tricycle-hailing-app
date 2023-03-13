@@ -2,6 +2,7 @@
 
 use App\Events\CarMoved;
 use App\Events\SendPosition;
+use App\Http\Controllers\Admin\GeneralController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -61,6 +62,10 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
 
     Route::resource('keke', KekeController::class);
     Route::resource('place', PlaceController::class);
+    
+    Route::controller(GeneralController::class)->group(function () {
+        Route::get('/admin/keke/transit', 'kekeTransit')->name('keke.transit');
+    });
 });
 
 //RIDER
