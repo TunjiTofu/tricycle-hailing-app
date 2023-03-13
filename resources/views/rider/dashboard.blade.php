@@ -45,8 +45,8 @@
     <!-- Toaster CDN CSS Link -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
-     <!-- Style for SPINNER -->
-     <style>
+    <!-- Style for SPINNER -->
+    <style>
         /* Center the loader */
         .bground {
             background-color: #5153537e;
@@ -98,6 +98,7 @@
 </head>
 
 <body data-topbar="dark">
+    @vite(['resources/js/app.js']);
 
     <!-- <body data-layout="horizontal" data-topbar="dark"> -->
 
@@ -268,11 +269,11 @@
         });
     </script>
 
- <!-- Sweet Alert -->
-    {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>--}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script> 
+    <!-- Sweet Alert -->
+    {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
-    <script src="{{ asset('backend/assets/js/code.js') }}"></script> 
+    <script src="{{ asset('backend/assets/js/code.js') }}"></script>
 
     {{-- <!-- Sweet Alerts js -->
     <script src="{{ asset('backend/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -280,6 +281,95 @@
     <!-- Sweet alert init js-->
     <script src="{{ asset('backend/assets/js/pages/sweet-alerts.init.js') }}"></script> --}}
 
+    <!-- Bootstrap rating js -->
+    <script src="{{ asset('backend/assets/libs/bootstrap-rating/bootstrap-rating.min.js') }}"></script>
+
+    <script src="{{ asset('backend/assets/js/pages/rating-init.js') }}"></script>
+
+
+    <script>
+        function updateTripDB(msg) {
+            console.log('Message - ' + msg);
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+
+                    latt = position.coords.latitude;
+                    lngg = position.coords.longitude;
+
+                    console.log('Browser Detected');
+                    console.log('Lat - ' + latt);
+                    console.log('Lng - ' + lngg);
+
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: '{{ route('rider.update.trip') }}',
+                        data: {
+                            'latitude': latt,
+                            'longitude': lngg,
+                        },
+                        success: function(data) {
+                            console.log(data.success);
+                        },
+                        error: function(data) {
+                            console.log(data.success);
+                        }
+                    });
+
+
+                }
+            );
+
+
+        }
+
+
+
+        function notifyRider(e) {
+            var orderNotification = +document.getElementById("notification").textContent;
+            var newOrder = 0;
+            console.log('Order Notification ' + orderNotification);
+            console.log('New Order ' + newOrder);
+            console.log(e.msg.rider_id);
+            var rider_id = "{{ $profileData->id }}";
+            if (e.msg.rider_id == rider_id) {
+                console.log(e);
+                console.log(rider_id);
+                newOrder = orderNotification + 1;
+                $('#notification').text(newOrder);
+                toastr.options.closeButton = true;
+                toastr.options.closeMethod = 'fadeOut';
+                toastr.options.closeDuration = 5000;
+                toastr.info('A New Order Has Been Made');
+            }
+        }
+
+
+        window.onload = function() {
+            Echo.channel('tricycleApp')
+                .listen('SendPosition', (e) => {
+                    console.log(e);
+                    updateTripDB(e.msg)
+                });
+
+            Echo.channel('tricycleApp')
+                .listen('BookRide', (e) => {
+                    console.log(e);
+                    notifyRider(e)
+                });
+        }
+
+        // window.onload = function() {
+        //     Echo.channel('tricycleApp')
+        //         .listen('BookRide', (e) => {
+        //             console.log(e);
+        //             notifyRider(e)
+        //         });
+        // }
+    </script>
+
 </body>
+
 
 </html>

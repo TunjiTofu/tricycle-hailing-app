@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rider;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
@@ -16,14 +17,16 @@ class RiderProfileController extends Controller
     {
         $id = Auth::user()->id;
         $profileData = User::find($id);
-        return view('rider.profile.index', compact('profileData'));
+        $orderCount = Book::where('rider_id', $id)->where('read', 0)->where('status', 1)->count();
+        return view('rider.profile.index', compact('profileData','orderCount'));
     }
 
     public function edit()
     {
         $id = Auth::user()->id;
+        $profileData = User::find($id);
         $editData = User::find($id);
-        return view('rider.profile.edit', compact('editData'));
+        return view('rider.profile.edit', compact('editData','profileData','orderCount'));
     }
 
     public function update(Request $request)
