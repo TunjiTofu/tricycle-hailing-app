@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +11,9 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        return view('admin.index', compact('profileData'));
     }
 
 

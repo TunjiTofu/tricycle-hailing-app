@@ -65,6 +65,7 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
     
     Route::controller(GeneralController::class)->group(function () {
         Route::get('/admin/keke/transit', 'kekeTransit')->name('keke.transit');
+        Route::get('/admin/keke/orders', 'kekeOrderHistory')->name('keke.orders.history');
     });
 });
 

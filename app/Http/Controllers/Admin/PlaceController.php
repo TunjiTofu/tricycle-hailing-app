@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Place;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 // use TarfinLabs\LaravelSpatial\Types\Point;
 use TarfinLabs\LaravelSpatial\Types\Point;
 use Webpatser\Uuid\Uuid;
@@ -20,8 +22,10 @@ class PlaceController extends Controller
      */
     public function index(): View
     {
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
         $places = Place::latest()->get();
-        return view('admin.place.index', compact('places'));
+        return view('admin.place.index', compact('places','profileData'));
     }
 
     /**
@@ -31,7 +35,9 @@ class PlaceController extends Controller
      */
     public function create(): View
     {
-        return view('admin.place.create');
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        return view('admin.place.create',compact('profileData'));
     }
 
     /**

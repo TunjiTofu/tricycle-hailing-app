@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Webpatser\Uuid\Uuid;
 
 class KekeController extends Controller
@@ -19,9 +20,11 @@ class KekeController extends Controller
      */
     public function index(): View
     {
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
         $kekes = Keke::latest()->get();
         $riders = User::where('role', 'rider')->where('status','active')->get();
-        return view('admin.keke.index', compact('kekes','riders'));
+        return view('admin.keke.index', compact('kekes','riders','profileData'));
         // return View::make('admin.keke.index')->with('kekes', $kekes);
     }
 
