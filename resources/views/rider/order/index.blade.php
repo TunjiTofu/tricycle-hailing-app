@@ -117,7 +117,7 @@
                                 data-bs-dismiss="modal">Close</button>
                         </div>
                     </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
+                </div><!-- /.modal-dialog --> 
             </div><!-- /.modal -->
         </div>
     </div>
