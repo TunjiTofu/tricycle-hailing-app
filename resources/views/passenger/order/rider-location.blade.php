@@ -9,11 +9,27 @@
                     <div class="card">
                         <div class="card-body">
                             <h3>Rider's Location</h3>
-                            <input type="hidden" id="latitude" value="{{ $riderCurrentLocation->current_location->getLat() }}"> <br>
-                            <input type="hidden" id="longitude" value=" {{ $riderCurrentLocation->current_location->getLng() }}"> <br>
-                            <br>
-                            Time <br>
-                            {{ Carbon\Carbon::parse($riderCurrentLocation->update_trip_time)->diffForHumans() }}
+                            @if (isset($riderCurrentLocation->current_location))
+                                <input type="hidden" id="latitude"
+                                    value="{{ $riderCurrentLocation->current_location->getLat() }}"> <br>
+                                <input type="hidden" id="longitude"
+                                    value=" {{ $riderCurrentLocation->current_location->getLng() }}"> <br>
+
+                                <br>
+                                Time <br>
+                                {{ Carbon\Carbon::parse($riderCurrentLocation->update_trip_time)->diffForHumans() }}
+                            @else
+                                <input type="hidden" id="latitude"
+                                    value="{{ $riderCurrentLocation->start_location->getLat() }}"> <br>
+                                <input type="hidden" id="longitude"
+                                    value=" {{ $riderCurrentLocation->start_location->getLng() }}"> <br>
+
+                                <br>
+                                Time <br>
+                                {{ Carbon\Carbon::parse($riderCurrentLocation->start_trip_time)->diffForHumans() }}
+                            @endif
+
+
                             <div id="map" style="width: auto; height: 800px; border:1px solid red"></div>
 
                         </div><!-- end cardbody -->

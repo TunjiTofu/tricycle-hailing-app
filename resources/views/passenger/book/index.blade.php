@@ -37,7 +37,7 @@
                             <td>
                                 <form action="{{ route('passenger.book.select') }}" method="POST">
                                     @csrf
-                                    <input class="form-control" id="" name="keke_id" type="text"
+                                    <input class="form-control" id="" name="keke_id" type="hidden"
                                     value="{{ $keke->keke_id }}" required>
                                    
                                 <button type="submit" class="btn btn-xs btn-success waves-effect waves-light"

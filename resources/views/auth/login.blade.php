@@ -32,7 +32,7 @@
                     <div class="text-center mt-4">
                         <div class="mb-3">
                             <a href="index.html" class="auth-logo">
-                                <img src="{{ asset('logo/eleblack.png') }}" height="50" class="logo-dark mx-auto"
+                                <img src="{{ asset('logo/eleblack.png') }}" height="120" class="logo-dark mx-auto"
                                     alt="">
                             </a>
                         </div>

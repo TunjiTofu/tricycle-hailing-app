@@ -27,8 +27,12 @@ class PassengerController extends Controller
         Session::flush();
         Auth::logout();
 
-        session()->flash('message', 'Logout Successful');
-        return redirect('/');
+        // session()->flash('message', 'Logout Successful');
+        $notification = array(
+            'message' => 'Logout Successful',
+            'alert-type' => 'success'
+        );
+        return redirect('/')->with($notification);
     }
 
     
