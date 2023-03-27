@@ -12,8 +12,8 @@
             {{-- <form action="#" method="POST">
                 @csrf --}}
 
-            <input class="form-control" id="keke-id" name="keke_id" type="text" value="{{ $keke_id }}" required>
-            <input class="form-control" id="rider-id" name="rider_id" type="text" value="{{ $rider->rider_id }}" required>
+            <input class="form-control" id="keke-id" name="keke_id" type="hidden" value="{{ $keke_id }}" required>
+            <input class="form-control" id="rider-id" name="rider_id" type="hidden" value="{{ $rider->rider_id }}" required>
             @error('keke_id')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -49,7 +49,7 @@
 
             <div class="form-group mb-3 row">
                 <div class="col-6">
-                    <input class="form-control" id="destination-lng" name="longitude" type="text"
+                    <input class="form-control" id="destination-lng" name="longitude" type="hidden"
                         value="{{ old('longitude') }}" required placeholder="Location Longitude">
                     @error('longitude')
                         <span class="text-danger">{{ $message }}</span>
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="col-6">
-                    <input class="form-control" id="destination-lat" name="latitude" type="text"
+                    <input class="form-control" id="destination-lat" name="latitude" type="hidden"
                         value="{{ old('latitude') }}" required placeholder="Location Latitude">
                     @error('latitude')
                         <span class="text-danger">{{ $message }}</span>
