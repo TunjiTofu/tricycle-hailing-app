@@ -91,9 +91,11 @@ class KekeController extends Controller
      */
     public function edit($id):View
     {
+        $userId = Auth::user()->id;
+        $profileData = User::find($userId);
         $keke = Keke::findOrFail($id);
         $riders = User::where('role', 'rider')->where('status','active')->get();
-        return view('admin.keke.edit', compact('keke','riders'));
+        return view('admin.keke.edit', compact('keke','riders','profileData'));
     }
 
     /**

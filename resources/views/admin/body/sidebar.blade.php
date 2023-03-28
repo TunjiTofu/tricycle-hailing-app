@@ -27,6 +27,13 @@
                 </li>
     
                 <li>
+                    <a href="{{ route('adminrider.index') }}" class="waves-effect">
+                        <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end"></span>
+                        <span>Rider Management</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="fas fa-biking"></i>
                         <span>Keke Management</span>

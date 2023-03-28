@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\KekeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PlaceController;
+use App\Http\Controllers\Admin\RiderAdminController;
 use App\Http\Controllers\Passenger\BookController;
 use App\Http\Controllers\Passenger\PassengerController;
 use App\Http\Controllers\Passenger\PassengerOrderController;
@@ -60,7 +61,8 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
         Route::post('/admin/password-update', 'passwordUpdate')->name('admin.password-update');
     });
 
-    Route::resource('keke', KekeController::class);
+    Route::resource('keke', KekeController::class); 
+    Route::resource('adminrider', RiderAdminController::class); 
     Route::resource('place', PlaceController::class);
     
     Route::controller(GeneralController::class)->group(function () {
