@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Keke App</title>
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -59,7 +59,7 @@
         @if (Route::has('login'))
             <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="btn btn-primary btn-lg">Dashboard</a>
+                    <a href="{{ url('/') }}" class="btn btn-primary btn-lg">Dashboard</a>
                 @else
                     <a href="{{ route('login') }}" class="btn btn-dark btn-lg">Log in</a>
 
