@@ -19,7 +19,13 @@
                             <p class="card-title"> <strong> Full Name: </strong> {{ ucwords($rider->surname) }},
                                 {{ $rider->other_name }}</p>
                             <hr>
-                            <p class="card-title"> <strong> Sex: </strong> {{ $rider->sex }}</p>
+                            <p class="card-title"> <strong> Sex: </strong>
+                                @if ($rider->sex == 'm')
+                                    {{ 'Male' }}
+                                @else
+                                    {{ 'Female' }}
+                                @endif
+                            </p>
                             <hr>
                             <p class="card-title"> <strong> Status: </strong> {{ $rider->status }}</p>
                             <hr>
@@ -27,13 +33,16 @@
                             <hr>
                             <p class="card-title"> <strong> Phone Number: </strong> {{ $rider->phone }}</p>
                             <hr>
-                            <p class="card-title"> <strong> Date Created: </strong>  {{ Carbon\Carbon::parse($rider->created_at)->toDayDateTimeString() }}</p>
+                            <p class="card-title"> <strong> Date Created: </strong>
+                                {{ Carbon\Carbon::parse($rider->created_at)->toDayDateTimeString() }}</p>
                             <hr>
-                            <p class="card-title"> <strong> Last Updated: </strong>  {{ Carbon\Carbon::parse($rider->updated_at)->diffForHumans() }}</p>
+                            <p class="card-title"> <strong> Last Updated: </strong>
+                                {{ Carbon\Carbon::parse($rider->updated_at)->diffForHumans() }}</p>
                             <hr>
-                            <a href="{{ route('adminrider.index') }}" class="btn btn-danger btn-lg"><i class="fas fa-arrow-left"></i> All Riders</a>
-                           
-                            
+                            <a href="{{ route('adminrider.index') }}" class="btn btn-danger btn-lg"><i
+                                    class="fas fa-arrow-left"></i> All Riders</a>
+
+
                         </div>
                     </div>
                 </div>

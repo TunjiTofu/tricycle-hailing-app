@@ -28,7 +28,7 @@
     
                 <li>
                     <a href="{{ route('adminrider.index') }}" class="waves-effect">
-                        <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end"></span>
+                        <i class="fas fa-user-tag"></i><span class="badge rounded-pill bg-success float-end"></span>
                         <span>Rider Management</span>
                     </a>
                 </li>
