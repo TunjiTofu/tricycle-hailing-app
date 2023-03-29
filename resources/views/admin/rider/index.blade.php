@@ -23,6 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
+                                        <th>Profile Picture</th>
                                         <th>Name</th>
                                         <th>Sex</th>
                                         <th>Status</th>
@@ -37,6 +38,7 @@
                                     @foreach ($riders as $rider)
                                         <tr>
                                             <td>{{ $i++ }}</td>
+                                            <td><img src="{{ asset($rider->picture) }}" alt="{{ ucfirst($rider->username) }}" class="rounded-circle avatar-sm"></td>
                                             <td>
                                                 {{ ucfirst($rider->surname) }}, {{ ucfirst($rider->other_name) }} <br>
                                                 <b>Username: </b> {{ ucfirst($rider->username) }} <br>
@@ -50,7 +52,7 @@
                                                     {{ 'Female' }}
                                                 @endif
                                             </td>
-                                            <td>{{ $rider->status }}</td>
+                                            <td>{{ ucfirst($rider->status) }}</td>
                                             <td>
                                                 {{ Carbon\Carbon::parse($rider->created_at)->toDayDateTimeString() }} <br>
                                             </td>

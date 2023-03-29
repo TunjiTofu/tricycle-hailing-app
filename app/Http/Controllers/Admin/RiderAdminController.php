@@ -19,13 +19,13 @@ class RiderAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() :View
+    public function index(): View
     {
         $id = Auth::user()->id;
         $profileData = User::find($id);
         // $kekes = Keke::latest()->get();
         $riders = User::where('role', 'rider')->orderBy('surname', 'asc')->get();
-        return view('admin.rider.index', compact('riders','profileData'));
+        return view('admin.rider.index', compact('riders', 'profileData'));
     }
 
     /**
@@ -98,7 +98,7 @@ class RiderAdminController extends Controller
         $userId = Auth::user()->id;
         $profileData = User::find($userId);
         $rider = User::find($id);
-        return view('admin.rider.show', compact('rider','profileData'));
+        return view('admin.rider.show', compact('rider', 'profileData'));
     }
 
     /**
@@ -111,8 +111,8 @@ class RiderAdminController extends Controller
     {
         $userId = Auth::user()->id;
         $profileData = User::find($userId);
-        $rider = User::find($id);
-        return view('admin.rider.edit', compact('rider','profileData'));
+        $editData = User::find($id);
+        return view('admin.rider.edit', compact('editData', 'profileData'));
     }
 
     /**
@@ -124,7 +124,64 @@ class RiderAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $userData = User::find($id);
+        $request->validate([
+            'username' => ['required', 'string', 'max:8'],
+            'email' => ['required', 'string', 'email', 'max:100'],
+            'surname' => ['required', 'string', 'max:30'],
+            'oname' => ['required', 'string', 'max:30'],
+            'phone' => ['required', 'string', 'max:20'],
+            'dob' => ['required', 'string'],
+            'sex' => ['required', 'string', 'max:1', 'in:m,f'],
+            'status' => ['required', 'string', 'in:active,inactive'],
+        ]);
+
+        if ($request->file('photo')) {
+            $image = $request->file('photo');
+            @unlink($userData->picture);
+            $newImageName = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+
+            //resize with laravel image intervention
+            Image::make($image)->resize(256, 256)->save('upload/profile_pics/' . $newImageName);
+            $saveUrl = 'upload/profile_pics/' . $newImageName;
+
+            User::findOrFail($id)->update([
+                'username' => $request->username,
+                'email' => $request->email,
+                'surname' => $request->surname,
+                'other_name' => $request->oname,
+                'phone' => $request->phone,
+                'dob' => $request->dob,
+                'sex' => $request->sex,
+                'status' => $request->status,
+                'picture' => $saveUrl,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $notification = array(
+                'message' => 'Profile Updated With Image Successfully',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('adminrider.index')->with($notification);
+        } else {
+            User::findOrFail($id)->update([
+                'username' => $request->username,
+                'email' => $request->email,
+                'surname' => $request->surname,
+                'other_name' => $request->oname,
+                'phone' => $request->phone,
+                'dob' => $request->dob,
+                'sex' => $request->sex,
+                'status' => $request->status,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $notification = array(
+                'message' => 'Profile Updated Without Image Successfully',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('adminrider.index')->with($notification);
+        }
     }
 
     /**
@@ -135,6 +192,13 @@ class RiderAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user= User::findOrFail($id);
+        @unlink($user->picture);
+        $user->delete();
+        $notification = array(
+            'message' => "User Data Deleted Successully",
+            'alert-type' => 'info'
+        );
+        return redirect()->route('adminrider.index')->with($notification);
     }
 }
