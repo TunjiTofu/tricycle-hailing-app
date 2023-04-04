@@ -54,7 +54,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tinos', serif; 
+            font-family: 'Tinos', serif;
         } */
 
         .sidebar {
@@ -382,9 +382,9 @@
                 padding-left: 100px; // just an example
             }
         }
-    
 
-    /* <!-- Style for SPINNER --> */
+
+        /* <!-- Style for SPINNER --> */
         /* Center the loader */
         .bground {
             background-color: #5153537e;
@@ -394,7 +394,7 @@
             top: 0%;
             width: 100%;
             height: 100%;
-        } 
+        }
 
         .spinner {
             position: absolute;
@@ -640,7 +640,7 @@
             sidebar.classList.toggle("close");
         });
     </script>
-    
+
 
     <script>
         function updateTripDB(msg) {

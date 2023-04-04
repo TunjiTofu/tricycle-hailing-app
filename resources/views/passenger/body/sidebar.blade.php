@@ -30,16 +30,15 @@
     </div>
     <ul class="nav-links">
         <li>
-            <a href="{{ route('rider.dashboard') }}">
-                <i class='bx bx-home'> <span class="badge rounded-pill bg-success"> {{ $orderCount }}</span></i>
+            <a href="{{ route('passenger.dashboard') }}">
+                <i class='bx bx-home'></i>
                 <span class="link_name">Home </span>
 
 
             </a>
             <ul class="sub-menu blank">
                 <li>
-                    <a class="link_name" href="{{ route('rider.dashboard') }}">Home</a>
-                    <span class="badge rounded-pill bg-success float-end">{{ $orderCount }}</span>
+                    <a class="link_name" href="{{ route('passenger.dashboard') }}">Home</a>
                 </li>
             </ul>
         </li>
@@ -54,8 +53,7 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Orders </a></li>
-                <li><a href="{{ route('rider.pending.order') }}">Pending Orders</a></li>
-                <li><a href="{{ route('rider.history.order') }}">Order History</a></li>
+                <li><a href="{{ route('passenger.order') }}">Order History</a></li>
             </ul>
         </li>
        
