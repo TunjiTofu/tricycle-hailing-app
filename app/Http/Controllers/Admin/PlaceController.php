@@ -83,7 +83,9 @@ class PlaceController extends Controller
     {
         // dd($id);
         $place = Place::findOrFail($id);
-        return view('admin.place.view-place', compact('place'));
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        return view('admin.place.view-place', compact('place','profileData'));
     }
 
     /**
@@ -95,7 +97,9 @@ class PlaceController extends Controller
     public function edit($id): View
     {
         $place = Place::findOrFail($id);
-        return view('admin.place.edit', compact('place'));
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        return view('admin.place.edit', compact('place','profileData'));
     }
 
     /**

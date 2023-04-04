@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 @section('admin')
-    <div class="page-content">
+    {{-- <div class="page-content"> --}}
         <div class="container-fluid">
 
             <div class="row">
@@ -48,5 +48,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    {{-- </div> --}}
 @endsection

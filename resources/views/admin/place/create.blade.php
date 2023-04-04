@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 @section('admin')
-    <div class="page-content">
+    {{-- <div class="page-content"> --}}
         <div class="container-fluid">
 
 
@@ -25,7 +25,7 @@
 
                                 <div class="form-group mb-3 row">
                                     <div class="col-6">
-                                        <input class="form-control" id="lng" name="longitude" type="text"
+                                        <input class="form-control" id="lng" name="longitude" type="hidden"
                                             value="{{ old('longitude') }}" required placeholder="Location Longitude">
                                         @error('longitude')
                                             <span class="text-danger">{{ $message }}</span>
@@ -33,7 +33,7 @@
                                     </div>
 
                                     <div class="col-6">
-                                        <input class="form-control" id="lat" name="latitude" type="text"
+                                        <input class="form-control" id="lat" name="latitude" type="hidden"
                                             value="{{ old('latitude') }}" required placeholder="Location Latitude">
                                         @error('latitude')
                                             <span class="text-danger">{{ $message }}</span>
@@ -57,7 +57,7 @@
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->
-    </div>
+    {{-- </div> --}}
 
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap&v=weekly"
