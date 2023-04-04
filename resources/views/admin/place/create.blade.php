@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 @section('admin')
-    {{-- <div class="page-content"> --}}
+    <div class="page-content">
         <div class="container-fluid">
 
 
@@ -57,7 +57,7 @@
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->
-    {{-- </div> --}}
+    </div>
 
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tG6oR6w2vKxmR7F9PN93MmstFUkpReU&callback=initMap&v=weekly"

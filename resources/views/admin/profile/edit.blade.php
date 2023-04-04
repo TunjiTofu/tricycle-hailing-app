@@ -2,7 +2,7 @@
 @section('admin')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-    {{-- <div class="page-content"> --}}
+    <div class="page-content">
         <div class="container-fluid">
 
             <div class="row">
@@ -136,7 +136,7 @@
 
 
         </div>
-    {{-- </div> --}}
+    </div>
 
     <script type="text/javascript">
         $(document).ready(function() {

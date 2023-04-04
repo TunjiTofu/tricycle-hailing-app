@@ -25,6 +25,7 @@ class RiderProfileController extends Controller
     {
         $id = Auth::user()->id;
         $profileData = User::find($id);
+        $orderCount = Book::where('rider_id', $id)->where('read', 0)->where('status', 1)->count();
         $editData = User::find($id);
         return view('rider.profile.edit', compact('editData','profileData','orderCount'));
     }
@@ -91,7 +92,10 @@ class RiderProfileController extends Controller
 
     public function passwordChange()
     {
-        return view('rider.profile.change-password');
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        $orderCount = Book::where('rider_id', $id)->where('read', 0)->where('status', 1)->count();
+        return view('rider.profile.change-password', compact('profileData','orderCount'));
     }
 
     public function passwordUpdate(Request $request)

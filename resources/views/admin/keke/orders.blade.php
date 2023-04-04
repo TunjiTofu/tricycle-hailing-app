@@ -1,7 +1,7 @@
 @extends('admin.dashboard')
 @section('admin')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    {{-- <div class="page-content"> --}}
+    <div class="page-content">
         <div class="container-fluid">
             <div class="page-content">
                 <div class="container-fluid">
@@ -98,7 +98,7 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
 
-        {{-- </div> --}}
+        </div>
     </div>
 
     <script defer

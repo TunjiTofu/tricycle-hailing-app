@@ -395,7 +395,7 @@
     <div id="layout-wrapper">
 
         {{-- header section  --}}
-        {{-- @include('admin.body.header') --}}
+        @include('admin.body.header')
 
 
 

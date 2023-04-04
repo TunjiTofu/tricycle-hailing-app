@@ -30,77 +30,71 @@
     </div>
     <ul class="nav-links">
         <li>
-            <a href="{{ route('admin.dashboard') }}">
-                <i class='bx bx-home'></i>
-                <span class="link_name">Home</span>
+            <a href="{{ route('rider.dashboard') }}">
+                <i class='bx bx-home'> <span class="badge rounded-pill bg-success"> {{ $orderCount }}</span></i>
+                <span class="link_name">Home </span>
+
+
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="{{ route('admin.dashboard') }}">Home</a></li>
+                <li>
+                    <a class="link_name" href="{{ route('rider.dashboard') }}">Home</a>
+                    <span class="badge rounded-pill bg-success float-end">{{ $orderCount }}</span>
+                </li>
             </ul>
         </li>
-        <li>
-            <a href="{{ route('adminrider.index') }}">
-                <i class='bx bx-user-pin'></i>
-                <span class="link_name">Riders </span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="{{ route('adminrider.index') }}">Riders </a></li>
-            </ul>
-        </li>
+
         <li>
             <div class="icon-link">
                 <a href="#">
-                    <i class='bx bx-cycling'></i>
-                    <span class="link_name">Kekes </span>
+                    <i class='bx bx-mail-send'></i>
+                    <span class="link_name">Orders </span>
                 </a>
                 <i class='bx bxs-chevron-down arrow'></i>
             </div>
             <ul class="sub-menu">
-                <li><a class="link_name" href="#">Kekes </a></li>
-                <li><a href="{{ route('keke.index') }}">View All Keke</a></li>
-                <li><a href="{{ route('keke.transit') }}">Keke in Transit</a></li>
-                <li><a href="{{ route('keke.orders.history') }}">Keke Orders</a></li>
+                <li><a class="link_name" href="#">Orders </a></li>
+                <li><a href="{{ route('rider.pending.order') }}">Pending Orders</a></li>
+                <li><a href="{{ route('rider.history.order') }}">Order History</a></li>
             </ul>
         </li>
-        <li>
-            <div class="icon-link">
-                <a href="#">
-                    <i class='bx bx-home-heart'></i>
-                    <span class="link_name">Places</span>
-                </a>
-                <i class='bx bxs-chevron-down arrow'></i>
-            </div>
-            <ul class="sub-menu">
-                <li><a class="link_name" href="#">Places</a></li>
-                <li><a href="{{ route('place.index') }}">View All Locations</a></li>
-                <li><a href="{{ route('place.create') }}">Create New Location</a></li>
-            </ul>
-        </li>
+       
 
-
+        {{-- 
 
         <hr style="color:aliceblue; width: auto">
 
-
         <li>
-            <a href="{{ route('admin.profile') }}">
+            <a href="{{ route('rider.profile') }}">
+                <i class='bx bx-bell'><span class="badge rounded-pill bg-danger float-end" id="notification">{{ $orderCount }}</span></i>
+                <span class="link_name">Notifications <h class="badge rounded-pill bg-danger float-end" id="notification">{{ $orderCount }}</h></span>
+            </a>
+            <ul class="sub-menu blank">
+                <li>
+                    <a class="link_name" href="{{ route('rider.profile') }}">Notifications</a>
+                    <span class="badge rounded-pill bg-danger float-end" id="notification">{{ $orderCount }}</span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ route('rider.profile') }}">
                 <i class='bx bx-user'></i>
                 <span class="link_name">Profile</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="{{ route('admin.profile') }}">Profile</a></li>
+                <li><a class="link_name" href="{{ route('rider.profile') }}">Profile</a></li>
             </ul>
         </li>
         <li>
-            <a href="{{ route('admin.password-change') }}">
+            <a href="{{ route('rider.password-change') }}">
                 <i class='bx bx-wallet-alt'></i>
                 <span class="link_name">Change Password</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="{{ route('admin.password-change') }}">Change Password</a></li>
+                <li><a class="link_name" href="{{ route('rider.password-change') }}">Change Password</a></li>
             </ul>
         </li>
-
+--}}
         <li>
             <div class="profile-details">
                 <div class="profile-content">
@@ -110,10 +104,10 @@
                 <div class="name-job">
                     <div class="profile_name">{{ $profileData->surname }} {{ $profileData->other_name }}</div>
                 </div>
-                <a href="{{ route('admin.logout') }}">
+                <a href="{{ route('rider.logout') }}">
                     <i class='bx bx-log-out'></i>
                 </a>
             </div>
-        </li>
+        </li> 
     </ul>
 </div>
