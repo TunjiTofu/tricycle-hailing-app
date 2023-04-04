@@ -2,16 +2,17 @@
 @section('admin')
     <div class="page-content">
         <div class="container-fluid">
-
             <!-- start page title -->
             <div class="row">
+
                 <div class="col-12">
+
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">Dashboard</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                                {{-- <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li> --}}
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ol>
                         </div>
@@ -153,7 +154,8 @@
                 <div class="col-lg-3">
                     <div class="card bg-info text-white-50">
                         <div class="card-header bg-transparent ">
-                            <h5 class="text-center" style="color:#ffffff"><i class=" fas fa-coins"></i>Pending Orders</h5>
+                            <h5 class="text-center" style="color:#ffffff"><i class=" fas fa-coins"></i>Pending Orders
+                            </h5>
                         </div>
                         <div class="card-body">
                             <h1 style="text-align: center;color:#ffffff;">{{ $ordersPending }}</h1>

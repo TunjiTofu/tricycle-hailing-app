@@ -90,7 +90,9 @@ class ProfileController extends Controller
 
     public function passwordChange()
     {
-        return view('admin.profile.change-password');
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        return view('admin.profile.change-password', compact('profileData'));
     }
 
     public function passwordUpdate(Request $request)
