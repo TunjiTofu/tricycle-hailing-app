@@ -44,11 +44,11 @@
     <!-- Toaster CDN CSS Link -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
-    {{-- 
-        <!-- PWA  -->
-<meta name="theme-color" content="#6777ef"/>
-<link rel="apple-touch-icon" href="{{ asset('hotjar.png') }}">
-<link rel="manifest" href="{{ asset('/manifest.json') }}"> --}}
+
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('hotjar.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
 </head>
 
@@ -70,7 +70,7 @@
             </div>
         @endif
     </div>
-    <script src="{{ asset('/sw.js') }}"></script>
+    {{-- <script src="{{ asset('/sw.js') }}"></script> --}}
     <script src="{{ asset('/sw.js') }}"></script>
     <!--Toaster JS Link -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -98,13 +98,13 @@
         @endif
     </script>
 
-    {{-- <script>
-    if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function (reg) {
-            console.log("Service worker has been registered for scope: " + reg.scope);
-        });
-    }
-</script> --}}
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function(reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
 </body>
 
 </html>

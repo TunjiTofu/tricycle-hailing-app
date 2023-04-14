@@ -1,14 +1,14 @@
 {
-    "name": "Laravel Package Tutorial",
-    "short_name": "LPT",
+    "name": "Keke App Management System",
+    "short_name": "Keke App",
     "start_url": "/index.php",
     "background_color": "#6777ef",
-    "description": "Tutorial of Laravel Package",
+    "description": "Keke App Management System for Babcock University",
     "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "theme_color": "#d6cc42",
     "icons": [
         {
-            "src": "hotjar.png",
+            "src": "logo.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
