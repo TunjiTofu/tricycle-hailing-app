@@ -49,7 +49,7 @@ require __DIR__ . '/auth.php';
 
 // Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
 
-Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
+Route::middleware(['auth' ,'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [IndexController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/logout', [IndexController::class, 'destroy'])->name('admin.logout');
 
@@ -72,7 +72,7 @@ Route::middleware(['auth', 'verified' ,'role:admin'])->group(function () {
 });
 
 //RIDER
-Route::middleware(['auth', 'verified', 'role:rider'])->group(function () {
+Route::middleware(['auth', 'role:rider'])->group(function () {
     Route::get('/rider/dashboard', [RiderController::class, 'RiderDashboard'])->name('rider.dashboard');
     Route::get('/rider/logout', [RiderController::class, 'destroy'])->name('rider.logout');
     Route::get('/rider/change-status', [RiderController::class, 'changeStatus'])->name('rider.change.status');
@@ -106,7 +106,7 @@ Route::get('/rider/updatetripevent', [TripHistoryController::class, 'updateTripE
 
 
 //Passenger
-Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/dashboard', [PassengerController::class, 'PassengerDashboard'])->name('passenger.dashboard');
     Route::get('/passenger/logout', [PassengerController::class, 'destroy'])->name('passenger.logout');
 
